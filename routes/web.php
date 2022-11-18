@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\HomeController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
+Route::get('/dang-nhap',[AuthController::class,'index'])->name('login.view');
+
+
+Route::middleware('auth.user')->name('user.')->group(function (){
+    Route::get('/',[HomeController::class,'index'])->name('home');
 });
