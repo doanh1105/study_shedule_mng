@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Utils;
+
 class AppUtils{
     const ROLE_ADMIN = 0;
     const ROLE_GIAO_VU = 1;
