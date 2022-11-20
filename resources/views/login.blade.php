@@ -9,6 +9,8 @@
     <title>Đăng nhập</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="{{asset('css/simplebar.css')}}">
+
+    <link rel="stylesheet" href="{{asset('css/logo.css')}}">
     <!-- Fonts CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Icons CSS -->
@@ -21,11 +23,11 @@
   </head>
   <body class="light">
     <div class="wrapper vh-100">
-      <div class="row align-items-center h-100">
+      <div class="d-flex justify-content-center align-items-center h-100">
         <form method="POST" action="{{route('login.post')}}" class="col-lg-3 col-md-4 col-10 mx-auto text-center">
             @csrf
-          <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
-            <img class="logo" src="{{ asset('assets/images/logo.ico')}}" alt="">
+          <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="{{route('login.view')}}">
+            <img class="logo" src="{{ asset('assets/images/logo.ico')}}" alt="" >
           </a>
           <h1 class="h6 mb-3">Đăng nhập</h1>
           @if (Session::has('error'))
