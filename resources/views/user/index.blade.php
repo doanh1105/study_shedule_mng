@@ -1,12 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <a href="">Loginned</a>
-</body>
-</html>
+@extends('user.layouts.layout')
+
+{{-- title --}}
+@section('title')
+<title>Ối giời ôi</title>
+@endsection
+
+{{-- add css --}}
+@section('css')
+
+@endsection
+
+@php
+$user = Auth::user();
+@endphp
+
+@section('content')
+<main role="main" class="main-content">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="row align-items-center mb-2">
+            <div class="col">
+              <h2 class="h5 page-title">Xin chào {{$user->ho." ".$user->ten}}!</h2>
+            </div>
+          </div>
+        </div> <!-- .col-12 -->
+      </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+  </main>
+@endsection
+
+{{-- add js --}}
+@section('js')
+
+@endsection
