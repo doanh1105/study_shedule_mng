@@ -29,7 +29,7 @@
           <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="{{route('login.view')}}">
             <img class="logo" src="{{ asset('assets/images/logo.ico')}}" alt="" >
           </a>
-          <h1 class="h6 mb-3">Đăng nhập</h1>
+          <h1 class="h3 mb-3">Đăng nhập</h1>
           @if (Session::has('error'))
           <div class="alert alert-danger text-left">{{ Session::get('error') }}</div>
         @endif

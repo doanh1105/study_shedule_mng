@@ -2,7 +2,7 @@
 
 {{-- title --}}
 @section('title')
-<title>Ối giời ôi</title>
+<title>Trang chủ - Hệ thống quản lí lịch học - Khoa Công nghệ thông tin</title>
 @endsection
 
 {{-- add css --}}

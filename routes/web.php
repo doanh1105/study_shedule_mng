@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Controller_KhoaHoc;
 use App\Http\Controllers\Auth\HomeController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -21,5 +22,11 @@ Route::post('/dang-nhap',[AuthController::class,'login'])->name('login.post');
 Route::get('/dang-xuat',[AuthController::class,'logout'])->name('logout');
 
 Route::middleware('auth.user')->name('user.')->group(function (){
+    //user
     Route::get('/',[HomeController::class,'index'])->name('home');
+
+    //admin
+    Route::get('/khoa-hoc/danh-sach',[Controller_KhoaHoc::class,'index'])->name('khoaHoc.list');
+    Route::post('/khoa-hoc/tao-moi',[Controller_KhoaHoc::class,'store'])->name('khoaHoc.store');
+
 });

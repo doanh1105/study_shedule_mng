@@ -24,7 +24,7 @@ $factory->define(User::class, function (Faker $faker) {
         'username' => $faker->numerify('#########'),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'role' => $faker->numberBetween(2,3),
-        'id_KhoaHoc' => $faker->numberBetween(69,72),
+        'id_KhoaHoc' => null,
         'remember_token' => Str::random(10),
         'created_at' => now(),
         'updated_at' => now(),
