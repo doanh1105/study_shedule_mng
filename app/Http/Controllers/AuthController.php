@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-use function PHPUnit\Framework\returnSelf;
-
 class AuthController extends Controller
 {
     //
@@ -33,5 +31,10 @@ class AuthController extends Controller
             Log::error($e->getMessage() . $e->getTraceAsString());
             return back()->with('error',__('auth.undefine_error'));
         }
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login.view');
     }
 }
