@@ -3,13 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Utils\AppUtils;
-use App\Models\KhoaHoc;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
-class Controller_KhoaHoc extends Controller
+class Controller_MonHoc extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,15 +14,7 @@ class Controller_KhoaHoc extends Controller
      */
     public function index()
     {
-        $list_khoaHoc = KhoaHoc::select('khoa_hocs.*',
-            DB::raw('COUNT(mon_hocs.id) as so_mon_hoc'),
-            DB::raw('COUNT(users.id) as so_luong_sinh_vien')
-            )
-            ->leftJoin('mon_hocs','khoa_hocs.id','mon_hocs.id_khoaHoc')
-            ->leftJoin('users','khoa_hocs.id','users.id_khoaHoc')
-            ->groupBy('khoa_hocs.id')
-            ->paginate(AppUtils::ITEM_PER_PAGE);
-        return view('user.admin_gv.khoaHoc.list',['list_khoaHoc' => $list_khoaHoc]);
+        //
     }
 
     /**
@@ -38,18 +26,6 @@ class Controller_KhoaHoc extends Controller
     public function store(Request $request)
     {
         //
-        try{
-            $khoaHoc_new = [
-                'tenKhoa' => $request->tenKhoaHoc,
-            ];
-            KhoaHoc::create($khoaHoc_new);
-
-            return back()->with('success',__('messages.khoaHoc.create.success'));
-        }
-        catch(\Exception $e){
-            Log::error($e->getMessage(). $e->getTraceAsString());
-            return back()->with('error',__('messages.khoaHoc.create.fails'));
-        }
     }
 
     /**

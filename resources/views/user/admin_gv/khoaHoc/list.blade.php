@@ -30,31 +30,26 @@
                                         <thead class="text-primary">
                                             <tr class="thead-dark">
                                                 <th>Tên khoá đào tạo</th>
+                                                <th>Số môn đã mở</th>
                                                 <th>Số lượng sinh viên</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($list_khoaHoc as $khoaHoc)
                                             <tr>
-                                                <td>K68</td>
-                                                <td>1</td>
+                                                <td>{{$khoaHoc->tenKhoa}}</td>
+                                                <td>{{$khoaHoc->so_mon_hoc}}</td>
+                                                <td>{{$khoaHoc->so_luong_sinh_vien}}</td>
                                                 <td>
                                                     <button class="btn btn-warning mr-1 mb-1">Sửa</button>
                                                     <button class="btn btn-danger mb-1">Xoá</button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>K69</td>
-                                                <td>1</td>
-                                                <td>
-                                                    <button class="btn btn-warning mr-1 mb-1">Sửa</button>
-                                                    <button class="btn btn-danger mb-1">Xoá</button>
-                                                </td>
-                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="d-flex justify-content-center"><button
-                                            class="btn btn-outline-primary">links</button></div>
+                                    <div class="d-flex justify-content-center">{{$list_khoaHoc->links()}}</div>
                                 </div>
                             </div>
                         </div>

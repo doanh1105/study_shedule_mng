@@ -7,4 +7,7 @@ class AppUtils{
     const ROLE_GIAO_VU = 1;
     const ROLE_GIANG_VIEN = 2;
     const ROLE_SINH_VIEN = 3;
+
+    // số lượng bản ghi phân trang
+    const ITEM_PER_PAGE = 3;
 }
