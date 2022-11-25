@@ -18,14 +18,14 @@
         </a>
       </div>
         <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item w-100">
+            <li class="nav-item w-100 {{request()->routeIs('user.home') ? 'active' : ''}}">
                 <a class="nav-link h5" href="{{ route('user.home') }}">
                     <i class="fe fe-home fe-16"></i>
                     <span class="ml-3 item-text">Trang chủ</span>
                 </a>
             </li>
 
-            <li class="nav-item w-100">
+            <li class="nav-item w-100 {{request()->routeIs('user.khoaHoc*') ? 'active' : ''}}">
                 <a class="nav-link h5" href="{{ route('user.khoaHoc.list') }}">
                     <i class="fe fe-layers fe-16"></i>
                     <span class="ml-3 item-text">Khoá đào tạo</span>
