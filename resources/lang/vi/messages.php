@@ -5,10 +5,17 @@ return [
     /*
     custom message
     */
-    'khoaHoc' => [
+
         'create' => [
-            'success' => 'Thêm khoá mới thành công!',
-            'fails' => 'Có lỗi xảy ra khi thêm Khoá, vui lòng thử lại!'
-        ]
-    ],
+            'success' => 'Thêm :attribute mới thành công!',
+            'fails' => 'Có lỗi xảy ra khi thêm :attribute, vui lòng thử lại!'
+        ],
+
+        'update' => [
+            'success' => 'Sửa thành công!',
+            'fails' => 'Có lỗi xảy ra khi cập nhật, vui lòng thử lại!'
+        ],
+
+        'exist' => ':attribute đã tồn tại!',
+        'not_match' => ':attribute không tồn tại!',
 ];

@@ -37,19 +37,20 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($list_khoaHoc as $khoaHoc)
-                                            <tr>
-                                                <td>{{$khoaHoc->tenKhoa}}</td>
-                                                <td>{{$khoaHoc->so_mon_hoc}}</td>
-                                                <td>{{$khoaHoc->so_luong_sinh_vien}}</td>
-                                                <td>
-                                                    <button class="btn btn-warning mr-1 mb-1">Sửa</button>
-                                                    <button class="btn btn-danger mb-1">Xoá</button>
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td>{{ $khoaHoc->tenKhoa }}</td>
+                                                    <td>{{ $khoaHoc->so_mon_hoc }}</td>
+                                                    <td>{{ $khoaHoc->so_luong_sinh_vien }}</td>
+                                                    <td>
+                                                        <button class="btn btn-warning mr-1 mb-1" data-toggle="modal"
+                                                            data-target="#sua-khoa-hoc-{{ $khoaHoc->id }}">Sửa</button>
+                                                        <button class="btn btn-danger mb-1">Xoá</button>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="d-flex justify-content-center">{{$list_khoaHoc->links()}}</div>
+                                    <div class="d-flex justify-content-center">{{ $list_khoaHoc->links() }}</div>
                                 </div>
                             </div>
                         </div>
@@ -60,20 +61,20 @@
         </div>
 
         {{-- thêm khoá mới --}}
-        <div class="modal fade" id="add-khoa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="add-khoa" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Thêm khoá đào tạo</h5>
+                        <h5 class="modal-title">Thêm khoá đào tạo</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('user.khoaHoc.store')}}" method="POST">
+                    <form action="{{ route('user.khoaHoc.store') }}" method="POST">
                         @csrf
                         <div class="modal-body">
-                            <input class="form-control form-control-lg" name="tenKhoaHoc" type="text" placeholder="Tên khoá đào tạo"
-                                required>
+                            <input class="form-control form-control-lg" name="tenKhoaHoc" type="text"
+                                placeholder="Tên khoá đào tạo" required>
                         </div>
                         <div class="modal-footer">
                             <button type="reset" class="btn btn-secondary">Reset</button>
@@ -83,30 +84,68 @@
                 </div>
             </div>
         </div>
+
+        {{-- sửa khoá học --}}
+        @foreach ($list_khoaHoc as $khoaHoc)
+            <div class="modal fade" id="sua-khoa-hoc-{{ $khoaHoc->id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Sửa khoá đào tạo</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{{ route('user.khoaHoc.update', ['id' => $khoaHoc->id]) }}" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <input class="form-control form-control-lg" value="{{ $khoaHoc->tenKhoa }}"
+                                    name="tenKhoaHoc" type="text" placeholder="Tên khoá đào tạo" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </main>
 @endsection
 
 {{-- add js --}}
 @section('js')
     @if (Session::has('success'))
-    <script>
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: "{{ Session::get('success') }}",
-            showConfirmButton: true,
-        })
-    </script>
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: "{{ Session::get('success') }}",
+                showConfirmButton: true,
+            })
+        </script>
     @endif
 
     @if (Session::has('error'))
-    <script>
-        Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: "{{ Session::get('error') }}",
-            showConfirmButton: true,
-        })
-    </script>
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: "{{ Session::get('error') }}",
+                showConfirmButton: true,
+            })
+        </script>
+    @endif
+
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: "{{ $errors->first() }}",
+                showConfirmButton: true,
+            })
+        </script>
     @endif
 @endsection

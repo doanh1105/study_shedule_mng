@@ -28,5 +28,6 @@ Route::middleware('auth.user')->name('user.')->group(function (){
     //admin
     Route::get('/khoa-hoc/danh-sach',[Controller_KhoaHoc::class,'index'])->name('khoaHoc.list');
     Route::post('/khoa-hoc/tao-moi',[Controller_KhoaHoc::class,'store'])->name('khoaHoc.store');
+    Route::post('/khoa-hoc/{id}/update',[Controller_KhoaHoc::class,'update'])->name('khoaHoc.update');
 
 });

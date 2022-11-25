@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\KhoaHocRequest;
 use App\Http\Utils\AppUtils;
 use App\Models\KhoaHoc;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class Controller_KhoaHoc extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(KhoaHocRequest $request)
     {
         //
         try{
@@ -44,23 +45,12 @@ class Controller_KhoaHoc extends Controller
             ];
             KhoaHoc::create($khoaHoc_new);
 
-            return back()->with('success',__('messages.khoaHoc.create.success'));
+            return back()->with('success',__('messages.create.success',['attribute' => 'Khoá']));
         }
         catch(\Exception $e){
             Log::error($e->getMessage(). $e->getTraceAsString());
-            return back()->with('error',__('messages.khoaHoc.create.fails'));
+            return back()->with('error',__('messages.create.fails',['attribute' => 'Khoá']));
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -70,9 +60,27 @@ class Controller_KhoaHoc extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(KhoaHocRequest $request, $id)
     {
         //
+        try{
+            $khoaHoc = KhoaHoc::find($id);
+            if(!$khoaHoc){
+                return back()->with('error',__('messages.not_match',['attribute']));
+            }
+            else{
+                $tenKhoaHoc = $request->tenKhoaHoc;
+                $khoaHoc->update([
+                    'tenKhoa' => $tenKhoaHoc
+                ]);
+
+                return back()->with('success',__('messages.update.success'));
+            }
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage(). $e->getTraceAsString());
+            return back()->with('error',__('messages.update.fails'));
+        }
     }
 
     /**
