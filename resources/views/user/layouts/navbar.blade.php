@@ -32,12 +32,12 @@
                 </a>
             </li>
 
-            <li class="nav-item w-100">
+            {{-- <li class="nav-item w-100">
                 <a class="nav-link h5" href="{{ route('user.home') }}">
                     <i class="fe fe-users fe-16"></i>
                     <span class="ml-3 item-text">Phòng học</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </nav>
   </aside>
