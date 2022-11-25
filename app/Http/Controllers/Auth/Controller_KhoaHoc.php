@@ -26,6 +26,7 @@ class Controller_KhoaHoc extends Controller
             ->leftJoin('mon_hocs','khoa_hocs.id','mon_hocs.id_khoaHoc')
             ->leftJoin('users','khoa_hocs.id','users.id_khoaHoc')
             ->groupBy('khoa_hocs.id')
+            ->orderBy('id','desc')
             ->paginate(AppUtils::ITEM_PER_PAGE);
         return view('user.admin_gv.khoaHoc.list',['list_khoaHoc' => $list_khoaHoc]);
     }
@@ -45,11 +46,11 @@ class Controller_KhoaHoc extends Controller
             ];
             KhoaHoc::create($khoaHoc_new);
 
-            return back()->with('success',__('messages.create.success',['attribute' => 'Khoá']));
+            return back()->with('success',__('messages.success.create',['attribute' => 'Khoá']));
         }
         catch(\Exception $e){
             Log::error($e->getMessage(). $e->getTraceAsString());
-            return back()->with('error',__('messages.create.fails',['attribute' => 'Khoá']));
+            return back()->with('error',__('messages.fails.create',['attribute' => 'Khoá']));
         }
     }
 
@@ -66,7 +67,7 @@ class Controller_KhoaHoc extends Controller
         try{
             $khoaHoc = KhoaHoc::find($id);
             if(!$khoaHoc){
-                return back()->with('error',__('messages.not_match',['attribute']));
+                return back()->with('error',__('messages.not_match',['attribute' => 'Khoá']));
             }
             else{
                 $tenKhoaHoc = $request->tenKhoaHoc;
@@ -74,12 +75,12 @@ class Controller_KhoaHoc extends Controller
                     'tenKhoa' => $tenKhoaHoc
                 ]);
 
-                return back()->with('success',__('messages.update.success'));
+                return back()->with('success',__('messages.success.update'));
             }
         }
         catch(\Exception $e){
             Log::error($e->getMessage(). $e->getTraceAsString());
-            return back()->with('error',__('messages.update.fails'));
+            return back()->with('error',__('messages.fails.update'));
         }
     }
 
@@ -92,5 +93,19 @@ class Controller_KhoaHoc extends Controller
     public function destroy($id)
     {
         //
+        try{
+            $khoaHoc = KhoaHoc::find($id);
+            if(!$khoaHoc){
+                return back()->with('error',__('messages.not_match',['attribute' => 'Khoá']));
+            }
+            else{
+                $khoaHoc->delete();
+                return back()->with('success',__('messages.success.delete'));
+            }
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage(). $e->getTraceAsString());
+            return back()->with('error',__('messages.fails.delete'));
+        }
     }
 }

@@ -44,7 +44,7 @@
                                                     <td>
                                                         <button class="btn btn-warning mr-1 mb-1" data-toggle="modal"
                                                             data-target="#sua-khoa-hoc-{{ $khoaHoc->id }}">Sửa</button>
-                                                        <button class="btn btn-danger mb-1">Xoá</button>
+                                                        <a href="#" onclick="deleteKhoa(`{{route('user.khoaHoc.destroy',['id' => $khoaHoc->id])}}`)"><button class="btn btn-danger mb-1">Xoá</button></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -148,4 +148,5 @@
             })
         </script>
     @endif
+    <script src="{{asset('js/appCustom/khoaHoc.js')}}"></script>
 @endsection
