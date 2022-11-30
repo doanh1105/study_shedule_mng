@@ -43,7 +43,7 @@ class KhoaHocRequest extends FormRequest
     public function messages()
         {
             return [
-                'tenKhoaHoc.unique' => __('messages.exist',['attribute' => 'Khoá']),
+                'tenKhoaHoc.unique' => __('messages.exist',['attribute' => 'Khoá này']),
             ];
         }
 }
