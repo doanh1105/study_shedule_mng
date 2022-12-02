@@ -44,7 +44,9 @@
                                                     <td>
                                                         <button class="btn btn-warning mr-1 mb-1" data-toggle="modal"
                                                             data-target="#sua-khoa-hoc-{{ $khoaHoc->id }}">Sửa</button>
-                                                        <a href="#" onclick="deleteKhoa(`{{route('user.khoaHoc.destroy',['id' => $khoaHoc->id])}}`)"><button class="btn btn-danger mb-1">Xoá</button></a>
+                                                        <a href="#"
+                                                            onclick="deleteKhoa(`{{ route('user.khoaHoc.destroy', ['id' => $khoaHoc->id]) }}`)"><button
+                                                                class="btn btn-danger mb-1">Xoá</button></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -127,17 +129,6 @@
         </script>
     @endif
 
-    @if (Session::has('error'))
-        <script>
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: "{{ Session::get('error') }}",
-                showConfirmButton: true,
-            })
-        </script>
-    @endif
-
     @if ($errors->any())
         <script>
             Swal.fire({
@@ -147,6 +138,15 @@
                 showConfirmButton: true,
             })
         </script>
+    @elseif (Session::has('error'))
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: "{{ Session::get('error') }}",
+                showConfirmButton: true,
+            })
+        </script>
     @endif
-    <script src="{{asset('js/appCustom/khoaHoc.js')}}"></script>
+    <script src="{{ asset('js/appCustom/delete.js') }}"></script>
 @endsection

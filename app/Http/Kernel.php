@@ -57,6 +57,7 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.user' => \App\Http\Middleware\AuthUserLogin::class,
         'role.admin' => \App\Http\Middleware\AdminRole::class,
+        'role.giao_vu' => \App\Http\Middleware\StudentManagerRole::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
