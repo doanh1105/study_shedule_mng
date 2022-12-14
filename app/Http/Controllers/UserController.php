@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\GiangVienRequest;
 use App\Http\Utils\AppUtils;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -29,7 +30,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function teacher_store(UserRequest $request)
+    public function teacher_store(GiangVienRequest $request)
     {
         //
         try{
@@ -40,7 +41,7 @@ class UserController extends Controller
             User::create([
                 'ho' => trim($first_name),
                 'ten' => trim($last_name),
-                'username' => trim($username),
+                'maNguoiDung' => trim($username),
                 'password' => Hash::make($password),
                 'role' => AppUtils::ROLE_GIANG_VIEN,
             ]);
@@ -60,7 +61,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function teacher_update(UserRequest $request, $id)
+    public function teacher_update(GiangVienRequest $request, $id)
     {
         //
         try{
@@ -107,8 +108,12 @@ class UserController extends Controller
     public function student_list()
     {
         //
-        $listUsers = User::where('role', AppUtils::ROLE_GIANG_VIEN)->paginate(AppUtils::ITEM_PER_PAGE);
-        return view('user.admin_gv.giangVien.list',['listUsers' => $listUsers]);
+        $listUsers = User::leftJoin('nganh_hoc','nganh_hoc.id','users.id_nganhHoc')
+        ->select('users.*','nganh_hoc.tenNganhHoc as tenNganhHoc')
+        ->where('role', AppUtils::ROLE_SINH_VIEN)
+        ->paginate(AppUtils::ITEM_PER_PAGE);
+        $listNganhHoc = DB::table('nganh_hoc')->get();
+        return view('user.admin_gv.sinhVien.list',['listUsers' => $listUsers,'listNganhHoc' => $listNganhHoc]);
     }
 
 }

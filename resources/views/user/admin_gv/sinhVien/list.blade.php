@@ -2,7 +2,7 @@
 
 {{-- title --}}
 @section('title')
-    <title>Quản lí Giảng viên - Hệ thống Quản lí lịch học - Khoa Công nghệ thông tin</title>
+    <title>Quản lí Sinh viên - Hệ thống Quản lí lịch học - Khoa Công nghệ thông tin</title>
 @endsection
 
 {{-- add css --}}
@@ -15,22 +15,24 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <h2 class="page-title">Giảng viên</h2>
+                    <h2 class="page-title">Sinh viên</h2>
                     <div class="row">
                         <div class="col-md-12 my-4">
                             <div class="card shadow">
                                 <div class="card-body">
                                     <div class="d-flex">
-                                        <h5 class="card-title float-left">Danh sách giảng viên - Khoa Công nghệ thông
+                                        <h5 class="card-title float-left">Danh sách sinh viên - Khoa Công nghệ thông
                                             tin</h5>
                                         <button class="btn btn-success ml-auto mb-1" data-toggle="modal"
-                                            data-target="#add-gv">Thêm giảng viên</button>
+                                            data-target="#add-sv">Thêm sinh viên</button>
                                     </div>
                                     <div class="f-flex justify-content-center">
                                         <table class="table table-hover w-50" style="margin: auto">
                                             <thead class="text-primary">
                                                 <tr class="thead-dark">
-                                                    <th>Tên giảng viên</th>
+                                                    <th>Tên sinh viên</th>
+                                                    <th>Mã sinh viên</th>
+                                                    <th>Khối ngành đào tạo</th>
                                                     <th>Hành động</th>
                                                 </tr>
                                             </thead>
@@ -38,10 +40,12 @@
                                                 @foreach ($listUsers as $user)
                                                 <tr>
                                                     <td>{{ $user->ho." ".$user->ten }}</td>
+                                                    <td>{{ $user->maNguoiDung }}</td>
+                                                    <td>{{ $user->tenNganhHoc }}</td>
                                                     <td>
                                                         <button class="btn btn-warning mr-1 mb-1" data-toggle="modal"
-                                                            data-target="#sua-giang-vien-{{$user->id}}">Sửa</button>
-                                                        <a href="#" onclick="deleteGiangVien(`{{route('user.giangVien.delete',['id' => $user->id])}}`)"><button class="btn btn-danger mb-1">Xoá</button></a>
+                                                            data-target="#sua-sinh-vien-{{$user->id}}">Sửa</button>
+                                                        <a href="#" onclick="deleteSinhVien(`{{route('user.sinhVien.delete',['id' => $user->id])}}`)"><button class="btn btn-danger mb-1">Xoá</button></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -59,24 +63,29 @@
         </div>
 
 
-        <div class="modal fade" id="add-gv" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="add-sv" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Thêm giảng viên mới</h5>
+                        <h5 class="modal-title">Thêm sinh viên</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('user.giangVien.store') }}" method="POST">
+                    <form action="{{ route('user.sinhVien.store') }}" method="POST">
                         @csrf
                         <div class="modal-body">
                             <input class="form-control form-control-lg mb-3" name="first_name" maxlength="30" type="text"
                                 placeholder="Họ và tên đệm" required>
                             <input class="form-control form-control-lg mb-3" name="last_name" maxlength="30" type="text"
                                 placeholder="Tên" required>
+                            <select class="form-control form-control-lg mb-3" name="maNganhDaoTao">
+                                @foreach ($listNganhHoc as $nganhHoc)
+                                    <option value="{{$nganhHoc->id}}">{{ $nganhHoc->tenNganhHoc }}</option>
+                                @endforeach
+                            </select>
                             <input class="form-control form-control-lg mb-3" name="username" minlength="6" maxlength="20" type="text"
-                                placeholder="Mã giảng viên" required>
+                                placeholder="Mã sinh viên" required>
                             <input class="form-control form-control-lg mb-3" name="password" minlength="6" maxlength="20" type="password"
                                 placeholder="Mật khẩu đăng nhập" required>
                         </div>
@@ -90,16 +99,16 @@
         </div>
 
         @foreach ($listUsers as $user)
-            <div class="modal fade" id="sua-giang-vien-{{$user->id}}" tabindex="-1" aria-hidden="true">
+            <div class="modal fade" id="sua-sinh-vien-{{$user->id}}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Sửa thông tin giảng viên</h5>
+                            <h5 class="modal-title">Sửa thông tin sinh viên</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="{{ route('user.giangVien.update', ['id' => $user->id]) }}" method="POST">
+                        <form action="{{ route('user.sinhVien.update', ['id' => $user->id]) }}" method="POST">
                             @csrf
                             <div class="modal-body">
                             <input class="form-control form-control-lg mb-3" value="{{$user->ho}}" name="first_name" maxlength="30" type="text"

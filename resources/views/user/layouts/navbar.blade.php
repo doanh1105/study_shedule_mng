@@ -24,11 +24,14 @@ $user = \Illuminate\Support\Facades\Auth::user();
             @if($user->role != \App\Http\Utils\AppUtils::ROLE_SINH_VIEN AND $user->role != \App\Http\Utils\AppUtils::ROLE_GIANG_VIEN)
                     <li class="nav-item dropdown {{request()->routeIs('user.khoaHoc*') || request()->routeIs('user.giangVien*')
                      ? 'active' : ''}}">
-                        <a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toogle nav-link h5">
+                        <a href="#setting" data-toggle="collapse" aria-expanded="{{request()->routeIs('user.khoaHoc*') || request()->routeIs('user.giangVien*')
+                        || request()->routeIs('user.sinhVien*') ? 'true' : 'false'}}" class="dropdown-toogle nav-link h5">
                             <i class="fe fe-tool fe-16"></i>
                             <span class="ml-3 item-text">Cấu hình</span>
                         </a>
-                        <ul class="collapse list-unstyled pl-4 w-100" id="setting">
+                        <ul class="collapse list-unstyled pl-4 w-100 collapse
+                        {{request()->routeIs('user.khoaHoc*') || request()->routeIs('user.giangVien*')
+                        || request()->routeIs('user.sinhVien*') ? 'show' : ''}}" id="setting">
                             @if($user->role == \App\Http\Utils\AppUtils::ROLE_ADMIN)
                                 <li class="nav-item w-100">
                                     <a class="nav-link h6 {{request()->routeIs('user.khoaHoc*') ? 'text-danger' : ''}}" href="{{ route('user.khoaHoc.list') }}">
@@ -44,7 +47,7 @@ $user = \Illuminate\Support\Facades\Auth::user();
                                 </a>
                             </li>
                             <li class="nav-item w-100 ">
-                                <a class="nav-link h6" href="{{ route('user.home') }}">
+                                <a class="nav-link h6 {{request()->routeIs('user.sinhVien*') ? 'text-danger' : ''}}" href="{{ route('user.sinhVien.list') }}">
                                     <i class="fe fe-users fe-16"></i>
                                     <span class="ml-3 item-text">Sinh viên</span>
                                 </a>
