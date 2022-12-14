@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\Controller_KhoaHoc;
 use App\Http\Controllers\Auth\HomeController;
+use App\Http\Controllers\Auth\PhongHocController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +49,12 @@ Route::middleware('auth.user')->name('user.')->group(function (){
         Route::post('/sinh-vien',[UserController::class,'student_store'])->name('sinhVien.store');
         Route::post('/sinh-vien/{id}/update',[UserController::class,'student_update'])->name('sinhVien.update');
         Route::get('/sinh-vien/{id}/delete',[UserController::class,'student_delete'])->name('sinhVien.delete');
+
+        // Phòng học
+        Route::get('/phong-hoc',[PhongHocController::class,'room_list'])->name('phongHoc.list');
+        Route::post('/phong-hoc',[PhongHocController::class,'room_store'])->name('phongHoc.store');
+        Route::post('/phong-hoc/{id}/update',[PhongHocController::class,'room_update'])->name('phongHoc.update');
+        Route::get('/phong-hoc/{id}/delete',[PhongHocController::class,'room_delete'])->name('phongHoc.delete');
     });
     //
 

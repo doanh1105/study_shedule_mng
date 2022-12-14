@@ -43,3 +43,19 @@ function deleteSinhVien(delete_domain){
         }
     })
 }
+
+
+function deletePhongHoc(delete_domain){
+    Swal.fire({
+        title: 'Xoá phòng học này?',
+        showDenyButton: true,
+        showCancelButton: true,
+        showConfirmButton: false,
+        cancelButtonText: 'Huỷ',
+        denyButtonText: `Xoá`,
+    }).then((result) => {
+        if (result.isDenied) {
+            window.location.href = delete_domain;
+        }
+    })
+}
