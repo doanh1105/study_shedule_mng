@@ -112,12 +112,18 @@ class UserController extends Controller
     {
         //
         $listUsers = User::leftJoin('nganh_hoc','nganh_hoc.id','users.id_nganhHoc')
-        ->select('users.*','nganh_hoc.tenNganhHoc as tenNganhHoc')
+        ->leftJoin('khoa_hocs','khoa_hocs.id','users.id_KhoaHoc')
+        ->select('users.*','nganh_hoc.tenNganhHoc as tenNganhHoc','khoa_hocs.tenKhoa as khoa')
         ->where('role', AppUtils::ROLE_SINH_VIEN)
         ->orderBy('users.id','desc')
         ->paginate(AppUtils::ITEM_PER_PAGE);
         $listNganhHoc = DB::table('nganh_hoc')->get();
-        return view('user.admin_gv.sinhVien.list',['listUsers' => $listUsers,'listNganhHoc' => $listNganhHoc]);
+        $listKhoaHoc = DB::table('khoa_hocs')->get();
+        return view('user.admin_gv.sinhVien.list',[
+            'listUsers' => $listUsers,
+            'listNganhHoc' => $listNganhHoc,
+            'listKhoaHoc' => $listKhoaHoc
+        ]);
     }
 
     public function student_store(StudentRequest $request)
@@ -129,6 +135,7 @@ class UserController extends Controller
             $username = $request->username;
             $password = $request->password;
             $id_nganhHoc = $request->get('maNganhDaoTao');
+            $id_khoaHoc = $request->get('id_Khoa');
             User::create([
                 'ho' => trim($first_name),
                 'ten' => trim($last_name),
@@ -136,6 +143,7 @@ class UserController extends Controller
                 'password' => Hash::make($password),
                 'role' => AppUtils::ROLE_SINH_VIEN,
                 'id_nganhHoc' => $id_nganhHoc,
+                'id_khoaHoc' => $id_khoaHoc,
             ]);
 
             return back()->with('success',__('messages.success.create',['attribute' => 'Sinh viên']));
@@ -152,10 +160,12 @@ class UserController extends Controller
             $first_name = $request->first_name;
             $last_name = $request->last_name;
             $id_nganhHoc = $request->get('maNganhDaoTao');
+            $id_khoaHoc = $request->get('id_Khoa');
             User::find($id)->update([
                 'ho' => trim($first_name),
                 'ten' => trim($last_name),
                 'id_nganhHoc' => $id_nganhHoc,
+                'id_khoaHoc' => $id_khoaHoc,
             ]);
 
             return back()->with('success',__('messages.success.update'));
