@@ -24,7 +24,7 @@ $user = \Illuminate\Support\Facades\Auth::user();
             @if($user->role != \App\Http\Utils\AppUtils::ROLE_SINH_VIEN AND $user->role != \App\Http\Utils\AppUtils::ROLE_GIANG_VIEN)
                     <li class="nav-item dropdown {{request()->routeIs('user.khoaHoc*') || request()->routeIs('user.giangVien*')
                      ? 'active' : ''}}">
-                        <a href="#setting" data-toggle="collapse" aria-expanded="false" class="nav-link h5">
+                        <a href="#setting" data-toggle="collapse" aria-expanded="false" class="dropdown-toogle nav-link h5">
                             <i class="fe fe-tool fe-16"></i>
                             <span class="ml-3 item-text">Cấu hình</span>
                         </a>

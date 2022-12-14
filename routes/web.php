@@ -45,6 +45,9 @@ Route::middleware('auth.user')->name('user.')->group(function (){
 
         // Sinh viên
         Route::get('/sinh-vien',[UserController::class,'student_list'])->name('sinhVien.list');
+        Route::post('/sinh-vien',[UserController::class,'student_store'])->name('sinhVien.store');
+        Route::post('/sinh-vien/{id}/update',[UserController::class,'student_update'])->name('sinhVien.update');
+        Route::get('/sinh-vien/{id}/delete',[UserController::class,'student_delete'])->name('sinhVien.delete');
     });
     //
 

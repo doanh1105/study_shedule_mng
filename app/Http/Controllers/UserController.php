@@ -102,4 +102,13 @@ class UserController extends Controller
             return back()->with('error',__('messages.fails.delete'));
         }
     }
+
+
+    public function student_list()
+    {
+        //
+        $listUsers = User::where('role', AppUtils::ROLE_GIANG_VIEN)->paginate(AppUtils::ITEM_PER_PAGE);
+        return view('user.admin_gv.giangVien.list',['listUsers' => $listUsers]);
+    }
+
 }
