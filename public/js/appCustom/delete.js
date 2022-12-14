@@ -28,3 +28,18 @@ function deleteGiangVien(delete_domain){
         }
     })
 }
+
+function deleteSinhVien(delete_domain){
+    Swal.fire({
+        title: 'Xoá sinh viên này?',
+        showDenyButton: true,
+        showCancelButton: true,
+        showConfirmButton: false,
+        cancelButtonText: 'Huỷ',
+        denyButtonText: `Xoá`,
+    }).then((result) => {
+        if (result.isDenied) {
+            window.location.href = delete_domain;
+        }
+    })
+}

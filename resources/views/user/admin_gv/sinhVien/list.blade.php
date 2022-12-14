@@ -111,10 +111,16 @@
                         <form action="{{ route('user.sinhVien.update', ['id' => $user->id]) }}" method="POST">
                             @csrf
                             <div class="modal-body">
+                            <input class="form-control form-control-lg mb-3 bg-info" value="{{$user->maNguoiDung}}" readonly disabled>
                             <input class="form-control form-control-lg mb-3" value="{{$user->ho}}" name="first_name" maxlength="30" type="text"
                                 placeholder="Họ và tên đệm" required>
                             <input class="form-control form-control-lg mb-3" value="{{$user->ten}}" name="last_name" maxlength="30" type="text"
                                 placeholder="Tên" required>
+                            <select class="form-control form-control-lg mb-3" name="maNganhDaoTao">
+                                @foreach ($listNganhHoc as $nganhHoc)
+                                    <option value="{{$nganhHoc->id}}" {{$user->id_nganhHoc == $nganhHoc->id ? 'selected' : ''}}>{{ $nganhHoc->tenNganhHoc }}</option>
+                                @endforeach
+                            </select>
                             </div>
                             <div class="modal-footer">
                                 <button type="reset" class="btn btn-secondary">Reset</button>
