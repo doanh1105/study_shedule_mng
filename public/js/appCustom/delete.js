@@ -59,3 +59,19 @@ function deletePhongHoc(delete_domain){
         }
     })
 }
+
+
+function deleteMonHoc(delete_domain){
+    Swal.fire({
+        title: 'Xoá môn học này?',
+        showDenyButton: true,
+        showCancelButton: true,
+        showConfirmButton: false,
+        cancelButtonText: 'Huỷ',
+        denyButtonText: `Xoá`,
+    }).then((result) => {
+        if (result.isDenied) {
+            window.location.href = delete_domain;
+        }
+    })
+}

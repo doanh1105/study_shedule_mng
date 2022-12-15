@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\Controller_KhoaHoc;
+use App\Http\Controllers\Auth\Controller_MonHoc;
 use App\Http\Controllers\Auth\HomeController;
 use App\Http\Controllers\Auth\PhongHocController;
 use App\Http\Controllers\AuthController;
@@ -55,6 +56,12 @@ Route::middleware('auth.user')->name('user.')->group(function (){
         Route::post('/phong-hoc',[PhongHocController::class,'room_store'])->name('phongHoc.store');
         Route::post('/phong-hoc/{id}/update',[PhongHocController::class,'room_update'])->name('phongHoc.update');
         Route::get('/phong-hoc/{id}/delete',[PhongHocController::class,'room_delete'])->name('phongHoc.delete');
+
+        // Môn học
+        Route::get('/mon-hoc',[Controller_MonHoc::class,'subject_list'])->name('monHoc.list');
+        Route::post('/mon-hoc',[Controller_MonHoc::class,'subject_store'])->name('monHoc.store');
+        Route::post('/mon-hoc/{id}/update',[Controller_MonHoc::class,'subject_update'])->name('monHoc.update');
+        Route::get('/mon-hoc/{id}/delete',[Controller_MonHoc::class,'subject_delete'])->name('monHoc.delete');
     });
     //
 

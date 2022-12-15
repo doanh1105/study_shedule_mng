@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StudentRequest extends FormRequest
+class SubjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,19 +16,24 @@ class StudentRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
     public function rules()
     {
         $method = $this->route()->getActionMethod();
 
-        if($method == 'student_store'){
+        if($method == 'subject_store'){
             return [
-                'username' => 'unique:users,maNguoiDung'
+                'maMonHoc' => 'unique:mon_hocs,maMon'
             ];
         }
 
-        if($method == 'student_update'){
+        if($method == 'subject_update'){
             return [
-                'username' => 'unique:users,maNguoiDung,'.$this->id.',id'
+                'maMonHoc' => 'unique:mon_hocs,maMon,'.$this->id.',id'
             ];
         }
     }
@@ -36,7 +41,7 @@ class StudentRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.unique' => __('messages.exist',['attribute' => 'Mã sinh viên']),
+            'maMonHoc.unique' => __('messages.exist',['attribute' => 'Mã môn học']),
         ];
     }
 }
