@@ -27,9 +27,10 @@
                                             data-target="#add-gv">Thêm giảng viên</button>
                                     </div>
                                     <div class="f-flex justify-content-center">
-                                        <table class="table table-hover w-50" style="margin: auto">
+                                        <table class="table table-hover w-75" style="margin: auto">
                                             <thead class="text-primary">
                                                 <tr class="thead-dark">
+                                                    <th>Mã giảng viên</th>
                                                     <th>Tên giảng viên</th>
                                                     <th>Hành động</th>
                                                 </tr>
@@ -37,6 +38,7 @@
                                             <tbody>
                                                 @foreach ($listUsers as $user)
                                                 <tr>
+                                                    <td>{{ $user->maNguoiDung }}</td>
                                                     <td>{{ $user->ho." ".$user->ten }}</td>
                                                     <td>
                                                         <button class="btn btn-warning mr-1 mb-1" data-toggle="modal"
@@ -102,6 +104,8 @@
                         <form action="{{ route('user.giangVien.update', ['id' => $user->id]) }}" method="POST">
                             @csrf
                             <div class="modal-body">
+                            <input class="form-control form-control-lg mb-3 bg-info" value="{{ $user->maNguoiDung }}" type="text"
+                                readonly disabled>
                             <input class="form-control form-control-lg mb-3" value="{{$user->ho}}" name="first_name" maxlength="30" type="text"
                                 placeholder="Họ và tên đệm" required>
                             <input class="form-control form-control-lg mb-3" value="{{$user->ten}}" name="last_name" maxlength="30" type="text"

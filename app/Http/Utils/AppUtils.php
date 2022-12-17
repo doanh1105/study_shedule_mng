@@ -9,5 +9,5 @@ class AppUtils{
     const ROLE_SINH_VIEN = 3;
 
     // số lượng bản ghi phân trang
-    const ITEM_PER_PAGE = 5;
+    const ITEM_PER_PAGE = 10;
 }
