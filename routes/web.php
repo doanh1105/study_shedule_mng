@@ -62,6 +62,13 @@ Route::middleware('auth.user')->name('user.')->group(function (){
         Route::post('/mon-hoc',[Controller_MonHoc::class,'subject_store'])->name('monHoc.store');
         Route::post('/mon-hoc/{id}/update',[Controller_MonHoc::class,'subject_update'])->name('monHoc.update');
         Route::get('/mon-hoc/{id}/delete',[Controller_MonHoc::class,'subject_delete'])->name('monHoc.delete');
+
+
+        // Lịch học
+        Route::get('/lịch học',[Controller_MonHoc::class,'lichHoc_list'])->name('lichHoc.list');
+        Route::post('/lịch học',[Controller_MonHoc::class,'lichHoc_store'])->name('lichHoc.store');
+        Route::post('/lịch học/{id}/update',[Controller_MonHoc::class,'lichHoc_update'])->name('lichHoc.update');
+        Route::get('/lịch học/{id}/delete',[Controller_MonHoc::class,'lichHoc_delete'])->name('lichHoc.delete');
     });
     //
 

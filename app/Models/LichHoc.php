@@ -1,11 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PhongHoc extends Model
+class LichHoc extends Model
 {
     //
     protected $guarded = [];
+
 }

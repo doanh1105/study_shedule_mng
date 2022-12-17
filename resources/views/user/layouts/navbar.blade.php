@@ -66,57 +66,23 @@ $user = \Illuminate\Support\Facades\Auth::user();
                                     <span class="ml-3 item-text">Môn học</span>
                                 </a>
                             </li>
-                            <li class="nav-item w-100">
-                                <a class="nav-link h6" href="{{ route('user.home') }}">
-                                    <i class="fe fe-voicemail fe-16"></i>
-                                    <span class="ml-3 item-text">Tiết học</span>
-                                </a>
-                            </li>
                         </ul>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a href="#fileman" data-toggle="collapse" aria-expanded="false" class="nav-link h5">
-                            <i class="fe fe-aperture fe-16"></i>
-                            <span class="ml-3 item-text">Quản lý lịch</span>
+                    <li class="nav-item w-100">
+                        <a class="nav-link h5" href="{{ route('user.home') }}">
+                            <i class="fe fe-home fe-16"></i>
+                            <span class="ml-3 item-text">Quản lý lịch học</span>
                         </a>
-                        <ul class="collapse list-unstyled pl-4 w-100" id="fileman">
-                            <li class="nav-item w-100">
-                                <a class="nav-link h6" href="{{ route('user.home') }}">
-                                    <i class="fe fe-users fe-16"></i>
-                                    <span class="ml-3 item-text">Quản lý lịch học</span>
-                                </a>
-                            </li>
-                            <li class="nav-item w-100">
-                                <a class="nav-link h6" href="{{ route('user.home') }}">
-                                    <i class="fe fe-codepen fe-16"></i>
-                                    <span class="ml-3 item-text">Quản lý lịch thi</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
             @endif
 
-                <li class="nav-item dropdown">
-                    <a href="#xem_lich" data-toggle="collapse" aria-expanded="false" class="nav-link h5">
-                        <i class="fe fe-eye fe-16"></i>
-                        <span class="ml-3 item-text">Xem lịch</span>
-                    </a>
-                    <ul class="collapse list-unstyled pl-4 w-100" id="xem_lich">
-                        <li class="nav-item w-100">
-                            <a class="nav-link h6" href="{{ route('user.home') }}">
-                                <i class="fe fe-users fe-16"></i>
-                                <span class="ml-3 item-text">Xem lịch học</span>
-                            </a>
-                        </li>
-                        <li class="nav-item w-100">
-                            <a class="nav-link h6" href="{{ route('user.home') }}">
-                                <i class="fe fe-codepen fe-16"></i>
-                                <span class="ml-3 item-text">Xem lịch thi</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+            <li class="nav-item w-100">
+                <a class="nav-link h5" href="{{ route('user.home') }}">
+                    <i class="fe fe-home fe-16"></i>
+                    <span class="ml-3 item-text">Xem lịch học</span>
+                </a>
+            </li>
         </ul>
     </nav>
   </aside>

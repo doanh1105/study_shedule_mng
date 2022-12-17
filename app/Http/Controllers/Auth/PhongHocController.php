@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoomRequest;
 use App\Http\Utils\AppUtils;
-use App\PhongHoc;
-use Illuminate\Http\Request;
+use App\Models\PhongHoc;
 use Illuminate\Support\Facades\Log;
 
 class PhongHocController extends Controller
