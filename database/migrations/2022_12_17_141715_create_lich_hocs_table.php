@@ -15,6 +15,11 @@ class CreateLichHocsTable extends Migration
     {
         Schema::create('lich_hocs', function (Blueprint $table) {
             $table->id();
+            $table->string('tenLichHoc');
+            $table->integer('id_khoaHoc');
+            $table->integer('id_nganhHoc');
+            $table->date('ngayBatDau');
+            $table->date('ngayKetThuc');
             $table->timestamps();
         });
     }

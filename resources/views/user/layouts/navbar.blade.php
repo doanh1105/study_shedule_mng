@@ -69,8 +69,8 @@ $user = \Illuminate\Support\Facades\Auth::user();
                         </ul>
                     </li>
 
-                    <li class="nav-item w-100">
-                        <a class="nav-link h5" href="{{ route('user.home') }}">
+                    <li class="nav-item w-100 {{request()->routeIs('user.lichHoc*') ? 'active' : ''}}">
+                        <a class="nav-link h5" href="{{ route('user.lichHoc.list') }}">
                             <i class="fe fe-home fe-16"></i>
                             <span class="ml-3 item-text">Quản lý lịch học</span>
                         </a>
