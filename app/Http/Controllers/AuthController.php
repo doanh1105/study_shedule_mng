@@ -19,7 +19,7 @@ class AuthController extends Controller
     public function login(Request $request){
         try{
             $loginInfo = [
-                'username' => $request->username,
+                'maNguoiDung' => $request->username,
                 'password' => $request->password,
             ];
             if(Auth::attempt($loginInfo)){

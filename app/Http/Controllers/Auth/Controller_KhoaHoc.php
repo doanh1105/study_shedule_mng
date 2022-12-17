@@ -42,7 +42,7 @@ class Controller_KhoaHoc extends Controller
         //
         try{
             $khoaHoc_new = [
-                'tenKhoa' => $request->tenKhoaHoc,
+                'tenKhoa' => trim($request->tenKhoaHoc),
             ];
             KhoaHoc::create($khoaHoc_new);
 
@@ -72,7 +72,7 @@ class Controller_KhoaHoc extends Controller
             else{
                 $tenKhoaHoc = $request->tenKhoaHoc;
                 $khoaHoc->update([
-                    'tenKhoa' => $tenKhoaHoc
+                    'tenKhoa' => trim($tenKhoaHoc)
                 ]);
 
                 return back()->with('success',__('messages.success.update'));

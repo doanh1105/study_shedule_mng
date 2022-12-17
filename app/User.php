@@ -21,4 +21,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getFullName(){
+        return $this->ho. " " . $this->ten;
+    }
 }
