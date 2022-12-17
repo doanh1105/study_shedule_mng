@@ -56,7 +56,7 @@
                                                             <button class="btn btn-primary mr-1 mb-1"
                                                                 >Xem</button>
                                                         </a>
-                                                        <a href="#" target="_blank">
+                                                        <a href="{{route('user.lichHoc.sort_view',['id_lichHoc' => $lichHoc->id,'id_nganhHoc' => $lichHoc->id_nganhHoc, 'id_khoaHoc' => $lichHoc->id_khoaHoc,'maNganhHoc' => $lichHoc->maNganhHoc])}}" target="_blank">
                                                             <button class="btn {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'btn-secondary' : 'btn-success'}}  mr-1 mb-1" {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'disabled' : ''}}
                                                                 >Xếp lịch học</button>
                                                         </a>
@@ -136,7 +136,8 @@
                             @csrf
                             <div class="modal-body">
                             <div class="bg-warning text-white mb-3">
-                                <span>Lưu ý: Thao tác này không thể chỉnh sửa khoá học và ngành học.</span></div>
+                                <span>Lưu ý: Thao tác này không thể chỉnh sửa khoá học và ngành học.
+                                    Nếu muốn thay đổi các thông tin này, vui lòng xoá lịch học và tạo lại lịch học khác</span></div>
                             <input class="form-control form-control-lg mb-3" value="{{ $lichHoc->tenLichHoc}}" name="tenLichHoc" type="text"
                                 placeholder="Tên lịch học" required>
                             <label for="start_time-{{$lichHoc->id}}">Thời gian bắt đầu</label>
