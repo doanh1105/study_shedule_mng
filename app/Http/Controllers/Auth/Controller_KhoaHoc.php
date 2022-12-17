@@ -19,14 +19,7 @@ class Controller_KhoaHoc extends Controller
      */
     public function index()
     {
-        $list_khoaHoc = KhoaHoc::select('khoa_hocs.*',
-            DB::raw('COUNT(mon_hocs.id) as so_mon_hoc'),
-            DB::raw('COUNT(users.id) as so_luong_sinh_vien')
-            )
-            ->leftJoin('mon_hocs','khoa_hocs.id','mon_hocs.id_khoaHoc')
-            ->leftJoin('users','khoa_hocs.id','users.id_khoaHoc')
-            ->groupBy('khoa_hocs.id')
-            ->orderBy('id','desc')
+        $list_khoaHoc = KhoaHoc::orderBy('id','desc')
             ->paginate(AppUtils::ITEM_PER_PAGE);
         return view('user.admin_gv.khoaHoc.list',['list_khoaHoc' => $list_khoaHoc]);
     }
@@ -43,6 +36,8 @@ class Controller_KhoaHoc extends Controller
         try{
             $khoaHoc_new = [
                 'tenKhoa' => trim($request->tenKhoaHoc),
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
             ];
             KhoaHoc::create($khoaHoc_new);
 
@@ -72,7 +67,9 @@ class Controller_KhoaHoc extends Controller
             else{
                 $tenKhoaHoc = $request->tenKhoaHoc;
                 $khoaHoc->update([
-                    'tenKhoa' => trim($tenKhoaHoc)
+                    'tenKhoa' => trim($tenKhoaHoc),
+                    'start_time' => $request->start_time,
+                    'end_time' => $request->end_time,
                 ]);
 
                 return back()->with('success',__('messages.success.update'));

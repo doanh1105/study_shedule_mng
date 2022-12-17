@@ -30,8 +30,8 @@
                                         <thead class="text-primary">
                                             <tr class="thead-dark">
                                                 <th>Tên khoá đào tạo</th>
-                                                <th>Số môn đã mở</th>
-                                                <th>Số lượng sinh viên</th>
+                                                <th>Năm bắt đầu</th>
+                                                <th>Năm kết thúc</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
@@ -39,8 +39,8 @@
                                             @foreach ($list_khoaHoc as $khoaHoc)
                                                 <tr>
                                                     <td>{{ $khoaHoc->tenKhoa }}</td>
-                                                    <td>{{ $khoaHoc->so_mon_hoc }}</td>
-                                                    <td>{{ $khoaHoc->so_luong_sinh_vien }}</td>
+                                                    <td>{{ $khoaHoc->start_time }}</td>
+                                                    <td>{{ $khoaHoc->end_time }}</td>
                                                     <td>
                                                         <button class="btn btn-warning mr-1 mb-1" data-toggle="modal"
                                                             data-target="#sua-khoa-hoc-{{ $khoaHoc->id }}">Sửa</button>
@@ -77,10 +77,14 @@
                         <div class="modal-body">
                             <input class="form-control form-control-lg" name="tenKhoaHoc" type="text"
                                 placeholder="Tên khoá đào tạo" required>
+                            <input class="form-control form-control-lg mt-3" id="time_start" name="start_time" value="2015" type="number" min="2015" max="2099"
+                                placeholder="Năm bắt đầu" required>
+                            <input class="form-control form-control-lg mt-3" id="time_end" name="end_time" value="2019" type="number" min="2015" max="2099"
+                                placeholder="Năm kết thúc" required>
                         </div>
                         <div class="modal-footer">
                             <button type="reset" class="btn btn-secondary">Reset</button>
-                            <button type="submit" class="btn btn-primary">Thêm</button>
+                            <button type="submit" class="btn btn-primary" onclick="validateTime(event,'time_start','time_end')">Thêm</button>
                         </div>
                     </form>
                 </div>
@@ -103,10 +107,14 @@
                             <div class="modal-body">
                                 <input class="form-control form-control-lg" value="{{ $khoaHoc->tenKhoa }}"
                                     name="tenKhoaHoc" type="text" placeholder="Tên khoá đào tạo" required>
+                                <input class="form-control form-control-lg mt-3" id="start_time-{{$khoaHoc->id}}" name="start_time" value="{{ $khoaHoc->start_time }}" type="number" min="2015" max="2099"
+                                    placeholder="Năm bắt đầu" required>
+                                <input class="form-control form-control-lg mt-3" id="end_time-{{$khoaHoc->id}}" name="end_time" value="{{ $khoaHoc->end_time }}" type="number" min="2015" max="2099"
+                                    placeholder="Năm kết thúc" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="reset" class="btn btn-secondary">Reset</button>
-                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                <button type="submit" class="btn btn-primary" onclick="validateTime(event,'start_time-{{$khoaHoc->id}}','end_time-{{$khoaHoc->id}}')">Lưu</button>
                             </div>
                         </form>
                     </div>
@@ -149,4 +157,5 @@
         </script>
     @endif
     <script src="{{ asset('js/appCustom/delete.js') }}"></script>
+    <script src="{{ asset('js/appCustom/custom.js') }}"></script>
 @endsection
