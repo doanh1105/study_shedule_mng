@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Utils\AppUtils;
 use App\Models\LichHoc;
 use App\Models\MonHoc;
+use App\Models\PhanCong;
 use App\Models\PhongHoc;
 use App\User;
 use Illuminate\Http\Request;
@@ -92,12 +93,42 @@ class LichHoc_Controller extends Controller
                 'listPhongHoc' => $listPhongHoc,
                 'listNgayHoc' => $listNgayHoc,
                 'listTietHoc' => $listTietHoc,
-
+                'id_lichHoc' => $id_lichHoc
             ]);
         }
         catch(\Exception $e){
             Log::error($e->getMessage(). $e->getTraceAsString());
             abort(500);
+        }
+    }
+
+    public function lichHoc_sort_store(Request $request){
+        try{
+            $id_lichHoc = $request->id_lichHoc;
+            $id_monHoc = $request->id_monHoc;
+            $id_giangVien = $request->id_giangVien;
+            $id_phongHoc = $request->id_phongHoc;
+            $id_ngayDay = $request->id_ngayDay;
+            $id_tietHoc = $request->id_tietHoc;
+
+            DB::beginTransaction();
+            foreach($id_tietHoc as $tietHoc){
+                DB::table('phan_congs')->insert([
+                    'id_lichHoc' => $id_lichHoc,
+                    'id_monHoc' => $id_monHoc,
+                    'id_user_giang_vien' => $id_giangVien,
+                    'id_phongHoc' => $id_phongHoc,
+                    'id_ngayDay' => $id_ngayDay,
+                    'id_tietHoc' => $tietHoc,
+                ]);
+            }
+            DB::commit();
+            return back()->with('success',__('messages.success.create',['attribute' => 'phân công']));
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage(). $e->getTraceAsString());
+            DB::rollBack();
+            return back()->with('error',__('messages.fails.create',['attribute' => 'phân công']));
         }
     }
 }

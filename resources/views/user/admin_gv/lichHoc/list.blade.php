@@ -138,6 +138,7 @@
                             <div class="bg-warning text-white mb-3">
                                 <span>Lưu ý: Thao tác này không thể chỉnh sửa khoá học và ngành học.
                                     Nếu muốn thay đổi các thông tin này, vui lòng xoá lịch học và tạo lại lịch học khác</span></div>
+                            <label for="time_start">Tên lịch học</label>
                             <input class="form-control form-control-lg mb-3" value="{{ $lichHoc->tenLichHoc}}" name="tenLichHoc" type="text"
                                 placeholder="Tên lịch học" required>
                             <label for="start_time-{{$lichHoc->id}}">Thời gian bắt đầu</label>

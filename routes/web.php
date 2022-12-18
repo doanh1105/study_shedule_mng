@@ -70,6 +70,6 @@ Route::middleware('auth.user')->name('user.')->group(function (){
         Route::post('/lich-hoc/{id}/update',[LichHoc_Controller::class,'lichHoc_update'])->name('lichHoc.update');
         Route::get('/lich-hoc/{id}/delete',[LichHoc_Controller::class,'lichHoc_delete'])->name('lichHoc.delete');
         Route::get('/lich-hoc/{id_lichHoc}{id_nganhHoc}o{id_khoaHoc}rt{maNganhHoc}_sort',[LichHoc_Controller::class,'lichHoc_sort_view'])->name('lichHoc.sort_view');
-        Route::post('/lich-hoc/{id_lichHoc}{id_nganhHoc}o{id_khoaHoc}rt{maNganhHoc}_sort',[LichHoc_Controller::class,'lichHoc_sort_update'])->name('lichHoc.sort_update');
+        Route::post('/lich-hoc/{id_lichHoc}{id_nganhHoc}o{id_khoaHoc}rt{maNganhHoc}_sort',[LichHoc_Controller::class,'lichHoc_sort_store'])->name('lichHoc.sort_store');
     });
 });
