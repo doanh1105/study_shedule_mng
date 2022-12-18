@@ -7,6 +7,23 @@
 
 {{-- add css --}}
 @section('css')
+<style>
+ .select2-container--bootstrap4 {
+    width: auto !important;
+    flex: 1 1 auto !important;
+}
+
+.select2-container--bootstrap4 .select2-selection--single {
+    height: 100% !important;
+    line-height: inherit !important;
+}
+.select2-results__option[aria-selected=true] {
+    display: none;
+}
+ .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+     border: 1px solid rgb(194, 189, 189);
+ }
+</style>
 @endsection
 
 
@@ -20,56 +37,78 @@
                         <div class="col-md-12 my-4">
                             <div class="card shadow">
                                 <div class="card-body">
+                                    <form action="" method="POST">
                                     <div class="d-flex">
                                         <h5 class="card-title float-left">Danh sách Lịch học - Khoa Công nghệ thông
                                             tin</h5>
+                                        <button class="btn btn-lg btn-success ml-auto mb-1 text-bold">Lưu lịch học</button>
                                     </div>
-                                    <form action="" method="POST">
-                                        <input type="hidden" value="" name="id_lichHoc">
-                                        <table class="table table-bordered">
-                                            <thead class="text-primary">
-                                                <tr class="thead-light">
-                                                    <th>Môn học</th>
-                                                    <th>Giảng viên</th>
-                                                    <th>Phòng học</th>
-                                                    <th>Ngày học</th>
-                                                    <th>Tiết học</th>
+                                        @csrf
+                                        <input type="hidden" value="{{$id_lichHoc}}" name="id_lichHoc">
+                                        <table class="table table-bordered ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="h5 text-info">Môn học</th>
+                                                    <th class="h5 text-info">Giảng viên</th>
+                                                    <th class="h5 text-info">Phòng học</th>
+                                                    <th class="h5 text-info">Ngày học</th>
+                                                    <th class="h5 text-info">Tiết học</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($listMonHoc as $monHoc)
                                                 <tr>
-                                                <td>{{$monHoc->tenMon}}</td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="Toán"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="Khanhdz"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="Khanhdz"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="Khanhdz"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="Khanhdz"></td>
+                                                    <td>
+                                                        <button class="btn btn-danger">Xoá</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                 <td>
-                                                    <select class="form-control w-50" name="id_giangVien">
+                                                    <select class="form-control select2 w-50" name="id_monHoc" id="id_monHoc">
+                                                        <option></option>
+                                                        @foreach ($listMonHoc as $monHoc)
+                                                        <option value="{{$monHoc->id}}">{{$monHoc->tenMon}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control select2 w-50" name="id_giangVien" id="id_giangVien">
+                                                        <option></option>
                                                         @foreach ($listGiangVien as $giangVien)
                                                         <option value="{{$giangVien->id}}">{{$giangVien->ho." ".$giangVien->ten}}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-control w-50" name="id_phongHoc">
+                                                    <select class="form-control select2 w-50" name="id_phongHoc" id="id_phongHoc">
+                                                        <option></option>
                                                         @foreach ($listPhongHoc as $phongHoc)
                                                         <option value="{{$phongHoc->id}}">{{$phongHoc->tenPhongHoc}}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-control w-50" name="id_ngayDay">
+                                                    <select class="form-control select2 w-50" name="id_ngayDay" id="id_ngayDay">
+                                                        <option></option>
                                                         @foreach ($listNgayHoc as $ngayHoc)
                                                         <option value="{{$ngayHoc->id}}">{{$ngayHoc->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-control w-50" name="id_ngayDay">
+                                                    <select class="form-control" name="id_tietHoc[]" multiple id="id_tietHoc">
+                                                        <option></option>
                                                         @foreach ($listTietHoc as $tietHoc)
                                                         <option value="{{$tietHoc->id}}">{{$tietHoc->tenTietHoc}}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 </tr>
-                                                @endforeach
                                             </tbody>
                                         </table>
                                     </form>
@@ -116,5 +155,5 @@
             })
         </script>
     @endif
-    <script src="{{ asset('js/appCustom/custom.js') }}"></script>
+    <script src="{{asset('js/appCustom/custom-lichHoc.js')}}"></script>
 @endsection

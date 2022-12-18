@@ -4,6 +4,7 @@
   <script src="{{ asset('js/moment.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
   <script src="{{ asset('js/simplebar.min.js') }}"></script>
+  <script src="{{ asset('js/select2.min.js') }}"></script>
   <script src='{{ asset('js/daterangepicker.js') }}'></script>
   <script src='{{ asset('js/jquery.stickOnScroll.js') }}'></script>
   <script src="{{ asset('js/tinycolor-min.js') }}"></script>
