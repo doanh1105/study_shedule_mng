@@ -34,6 +34,8 @@
                                                     <th>Tên môn học</th>
                                                     <th>Khoá</th>
                                                     <th>Khối ngành đào tạo</th>
+                                                    <th>Thời gian bắt đầu</th>
+                                                    <th>Thời gian kết thúc</th>
                                                     <th>Hành động</th>
                                                 </tr>
                                             </thead>
@@ -44,6 +46,8 @@
                                                         <td>{{ $monHoc->tenMon }}</td>
                                                         <td>{{ $monHoc->khoa }}</td>
                                                         <td>{{ $monHoc->tenNganhHoc }}</td>
+                                                        <td>{{ \Illuminate\Support\Carbon::parse($monHoc->start_time)->format('d-m-Y') }}</td>
+                                                        <td>{{ \Illuminate\Support\Carbon::parse($monHoc->end_time)->format('d-m-Y') }} </td>
                                                         <td>
                                                             <button class="btn btn-warning mr-1 mb-1" data-toggle="modal"
                                                                 data-target="#sua-mon-hoc-{{ $monHoc->id }}">Sửa</button>
@@ -93,10 +97,16 @@
                                     <option value="{{ $nganhHoc->id }}">{{ $nganhHoc->tenNganhHoc }}</option>
                                 @endforeach
                             </select>
+                            <label for="time_start">Thời gian bắt đầu</label>
+                            <input class="form-control form-control-lg mb-4" type="date" name="start_time" id="time_start" required
+                                placeholder="Thời gian bắt đầu" required>
+                            <label for="end_start">Thời gian kết thúc</label>
+                            <input class="form-control form-control-lg" type="date" name="end_time" id="time_end" required
+                                placeholder="Thời gian kết thúc" required>
                         </div>
                         <div class="modal-footer">
                             <button type="reset" class="btn btn-secondary">Reset</button>
-                            <button type="submit" class="btn btn-primary">Thêm</button>
+                            <button type="submit" class="btn btn-primary"  onclick="validateDate(event,'time_start','time_end')">Thêm</button>
                         </div>
                     </form>
                 </div>
@@ -115,13 +125,11 @@
                         </div>
                         <form action="{{ route('user.monHoc.update', ['id' => $monHoc->id]) }}" method="POST">
                             @csrf
-                            <div class="modal-body">
-                                <input class="form-control form-control-lg mb-3 bg-info" value="{{ $monHoc->maMon }}"
-                                    readonly disabled>
-                                <input class="form-control form-control-lg mb-3 bg-info" value="{{ $monHoc->khoa }}"
-                                    name="last_name" maxlength="30" type="text" readonly disabled>
-                                <input class="form-control form-control-lg mb-3 bg-info" value="{{ $monHoc->tenNganhHoc }}"
-                                    name="last_name" maxlength="30" type="text" readonly disabled>
+                            <div class="modal-body form-group">
+                                <label for="time_start">Mã môn học</label>
+                                <input class="form-control form-control-lg mb-3" name="maMonHoc" value="{{$monHoc->maMon}}" maxlength="30" type="text"
+                                placeholder="Mã môn học" required>
+                                <label for="time_start">Tên môn học</label>
                                 <input class="form-control form-control-lg mb-3" value="{{ $monHoc->tenMon }}"
                                     name="tenMonHoc" maxlength="30" type="text" placeholder="Tên môn học" required>
                             </div>
@@ -170,4 +178,5 @@
         </script>
     @endif
     <script src="{{ asset('js/appCustom/delete.js') }}"></script>
+    <script src="{{ asset('js/appCustom/custom.js')}}"></script>
 @endsection

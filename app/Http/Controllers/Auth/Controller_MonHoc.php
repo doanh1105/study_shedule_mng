@@ -19,7 +19,7 @@ class Controller_MonHoc extends Controller
         $listMonHoc = MonHoc::leftJoin('nganh_hoc','nganh_hoc.id','mon_hocs.id_nganhHoc')
         ->leftJoin('khoa_hocs','khoa_hocs.id','mon_hocs.id_KhoaHoc')
         ->select('mon_hocs.*','nganh_hoc.tenNganhHoc as tenNganhHoc','khoa_hocs.tenKhoa as khoa')
-        ->orderBy('khoa_hocs.id','desc')
+        ->orderBy('mon_hocs.id','desc')
         ->paginate(AppUtils::ITEM_PER_PAGE);
         $listNganhHoc = DB::table('nganh_hoc')->get();
         $listKhoaHoc = DB::table('khoa_hocs')->get();
@@ -30,7 +30,7 @@ class Controller_MonHoc extends Controller
         ]);
     }
 
-    public function subject_store(SubjectRequest $request)
+    public function subject_store(Request $request)
     {
         //
         try{
@@ -38,12 +38,16 @@ class Controller_MonHoc extends Controller
             $maMonHoc = $request->maMonHoc;
             $id_khoaHoc = $request->id_khoaHoc;
             $id_nganhHoc = $request->id_nganhHoc;
-            Log::debug($id_nganhHoc);
+            $start_time = $request->start_time;
+            $end_time = $request->end_time;
+
             MonHoc::create([
                 'maMon' => $maMonHoc,
                 'tenMon' => $tenMonHoc,
                 'id_khoaHoc' => $id_khoaHoc,
-                'id_nganhHoc' => $id_nganhHoc
+                'id_nganhHoc' => $id_nganhHoc,
+                'start_time' => $start_time,
+                'end_time' => $end_time
             ]);
 
             return back()->with('success',__('messages.success.create',['attribute' => 'Môn học']));
@@ -54,13 +58,15 @@ class Controller_MonHoc extends Controller
     }
 
 
-    public function subject_update(SubjectRequest $request, $id)
+    public function subject_update(Request $request, $id)
     {
         //
         try{
             $tenMonHoc = $request->tenMonHoc;
+            $maMonHoc = $request->maMonHoc;
             MonHoc::find($id)->update([
                 'tenMon' => $tenMonHoc,
+                'maMon' => $maMonHoc,
             ]);
 
             return back()->with('success',__('messages.success.update'));
