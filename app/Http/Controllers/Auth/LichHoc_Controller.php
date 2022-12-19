@@ -122,6 +122,7 @@ class LichHoc_Controller extends Controller
             // dd($grouped_phanCongs->toArray());
             $listMonHoc = MonHoc::where('id_KhoaHoc',$id_khoaHoc)
                         ->where('id_nganhHoc',$id_nganhHoc)
+                        ->where('end_time','>',now())
                         ->get();
             $listGiangVien = User::where('role',AppUtils::ROLE_GIANG_VIEN)->get();
             $listPhongHoc = PhongHoc::all();
