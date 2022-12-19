@@ -57,16 +57,22 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach ($listPhanCong as $phanCong)
                                                 <tr>
-                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="Toán"></td>
-                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="Khanhdz"></td>
-                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="Khanhdz"></td>
-                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="Khanhdz"></td>
-                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="Khanhdz"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong['tenMonHoc']}}"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong['ho']." ".$phanCong['ten']}}"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong['tenPhongHoc']}}"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong['ngayDay']}}"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{collect($phanCong['tietHocs'])->implode(',')}}"></td>
                                                     <td>
-                                                        <button class="btn btn-danger">Xoá</button>
+                                                        <a href="#"
+                                                        onclick="deletePhanCong(`{{route('user.lichHoc.sort_delete',[$phanCong['id_lichHoc'], $phanCong['id_monHoc'],$phanCong['id_user_giang_vien'],$phanCong['id_ngayDay'],implode('-',$phanCong['id_tietHocs']),$phanCong['id_phongHoc']])}}`)"
+                                                        >
+                                                        <button type="button" class="btn btn-danger">Xoá</button>
+                                                        </a>
                                                     </td>
                                                 </tr>
+                                                @endforeach
                                                 <tr>
                                                 <td>
                                                     <select class="form-control select2 w-50" name="id_monHoc" id="id_monHoc">
@@ -155,5 +161,6 @@
             })
         </script>
     @endif
+    <script src="{{asset('js/appCustom/delete.js')}}"></script>
     <script src="{{asset('js/appCustom/custom-lichHoc.js')}}"></script>
 @endsection

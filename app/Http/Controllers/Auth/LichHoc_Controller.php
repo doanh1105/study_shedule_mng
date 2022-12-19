@@ -80,6 +80,46 @@ class LichHoc_Controller extends Controller
 
     public function lichHoc_sort_view($id_lichHoc, $id_nganhHoc, $id_khoaHoc){
         try{
+            $listPhanCong  = PhanCong::select('phan_congs.*','mon_hocs.tenMon as tenMonHoc',
+                                'users.ho as ho',
+                                'users.ten as ten',
+                                'table_ngay_days.name as ngayDay',
+                                'tiet_hoc.tenTietHoc as tenTietHoc',
+                                'phong_hocs.tenPhonghoc as tenPhongHoc'
+                                )
+                            ->leftJoin('lich_hocs','phan_congs.id_lichHoc', 'lich_hocs.id')
+                            ->leftJoin('mon_hocs','phan_congs.id_monHoc','mon_hocs.id')
+                            ->leftJoin('users', 'phan_congs.id_user_giang_vien','users.id')
+                            ->leftJoin('table_ngay_days','phan_congs.id_ngayDay','table_ngay_days.id')
+                            ->leftJoin('tiet_hoc','phan_congs.id_tietHoc','tiet_hoc.id')
+                            ->leftJoin('phong_hocs','phan_congs.id_phongHoc','phong_hocs.id')
+                            ->where('lich_hocs.id',$id_lichHoc)
+                            ->get();
+                            // dd($listPhanCong);
+            $collection_phanCong = collect($listPhanCong);
+            // dd($collection_phanCong);
+            $grouped_phanCongs = $collection_phanCong->mapToGroups(function($item){
+                return [$item['id_user_giang_vien']  => $item];
+            })->map(function($item){
+                $collect = collect($item);
+                $first = $collect->first();
+                return [
+                    'tietHocs' => $collect->pluck('tenTietHoc')->toArray(),
+                    'id_tietHocs' => $collect->pluck('id_tietHoc')->toArray(),
+                    'id' => $first['id'],
+                    'id_lichHoc' => $first['id_lichHoc'],
+                    'id_monHoc' => $first['id_monHoc'],
+                    'id_user_giang_vien' => $first['id_user_giang_vien'],
+                    'id_ngayDay' => $first['id_ngayDay'],
+                    'id_phongHoc' => $first['id_phongHoc'],
+                    'tenMonHoc' => $first['tenMonHoc'],
+                    'ho' => $first['ho'],
+                    'ten' => $first['ten'],
+                    'ngayDay' => $first['ngayDay'],
+                    'tenPhongHoc' => $first['tenPhongHoc'],
+                ];
+            });
+            // dd($grouped_phanCongs->toArray());
             $listMonHoc = MonHoc::where('id_KhoaHoc',$id_khoaHoc)
                         ->where('id_nganhHoc',$id_nganhHoc)
                         ->get();
@@ -88,6 +128,7 @@ class LichHoc_Controller extends Controller
             $listNgayHoc = DB::table('table_ngay_days')->get();
             $listTietHoc = DB::table('tiet_hoc')->get();
             return view('user.admin_gv.lichHoc.xepLichHoc',[
+                'listPhanCong' => $grouped_phanCongs->toArray(),
                 'listMonHoc' => $listMonHoc,
                 'listGiangVien' => $listGiangVien,
                 'listPhongHoc' => $listPhongHoc,
@@ -129,6 +170,23 @@ class LichHoc_Controller extends Controller
             Log::error($e->getMessage(). $e->getTraceAsString());
             DB::rollBack();
             return back()->with('error',__('messages.fails.create',['attribute' => 'phân công']));
+        }
+    }
+
+    public function lichHoc_sort_delete($id_lichHoc, $id_monHoc,$id_user_giang_vien,$id_ngayDay,$tietHocs,$id_phongHoc){
+        try{
+            $listTietHoc = explode('-',$tietHocs);
+            DB::table('phan_congs')->where('id_lichHoc',$id_lichHoc)
+            ->where('id_monHoc',$id_monHoc)
+            ->where('id_user_giang_vien',$id_user_giang_vien)
+            ->where('id_ngayDay',$id_ngayDay)
+            ->where('id_phongHoc',$id_phongHoc)
+            ->whereIn('id_tietHoc',$listTietHoc)->delete();
+            return back()->with('success',__('messages.success.delete'));
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage(). $e->getTraceAsString());
+            return back()->with('error',__('messages.fails.delete'));
         }
     }
 }
