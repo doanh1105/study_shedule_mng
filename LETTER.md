@@ -1,0 +1,4 @@
+<!--
+Ngày nào đó, có thể là vô tình hay cố ý mà em đọc được những lời này. Anh không mong điều thứ 2 xảy đến, càng vui hơn nếu những dòng thư này mãi mãi không bao giờ em đọc được.
+Mình đã xa nhau hơn 1 năm, đã có lúc coi nhau xa lạ còn hơn cả người dưng.Suốt thời gian đó, anh vẫn không thể nào ngừng yêu em, còn em thì vẫn im lặng khiến anh không cảm thấy có hi vọng dù chỉ một chút. Rồi một ngày kia bất chợt em đồng ý nói chuyện lại với anh. Anh không còn để ý những chuyện trước đó nữa, mình đã có thời gian bên nhau hạnh phúc, vui, buồn, giận hờn đủ cả. Anh không cần biết cuối cùng mình có phải là công cụ để em qua môn hay không, cũng chẳng cần biết sau này em có còn yêu anh nữa hay không. Có thể sau này chúng ta không ở bên nhau nữa, có thể sau này em sẽ gặp được người tốt hơn anh, anh cũng không giận em vì những điều ấy, nhưng đó là chuyện của sau này. Cảm ơn em vì đã ở bên anh, đã yêu anh.
+-->
