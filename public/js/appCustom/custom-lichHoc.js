@@ -31,3 +31,14 @@ function noDelete(){
         'info'
     )
 }
+
+function requireValidate(event){
+    if(!$('#id_monHoc').val() || $('#id_tietHoc').val().length < 1 || !$('#id_ngayDay').val() || !$('#id_ngayDay').val() || !$('#id_phongHoc').val() || !$('#id_giangVien').val()){
+        event.preventDefault();
+        Swal.fire(
+            'Thông tin!',
+            'Vui lòng chọn đầy đủ các thông tin để xếp phân công!',
+            'info'
+        )
+    }
+}
