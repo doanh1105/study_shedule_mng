@@ -17,11 +17,8 @@ class CheckLichHocCanSort
      */
     public function handle($request, Closure $next)
     {
-        $id_lichHoc = $request->route('id_lichHoc');
+        $id_lichHoc = $request->route()->parameter('id_lichHoc');
         $lichHoc = LichHoc::find($id_lichHoc);
-        if(!$lichHoc){
-            abort(404);
-        };
         if($lichHoc && $lichHoc->ngayKetThuc <= now()){
             return redirect()->route('user.home');
         }

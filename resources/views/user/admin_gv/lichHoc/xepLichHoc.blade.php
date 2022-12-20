@@ -39,9 +39,10 @@
                                 <div class="card-body">
                                     <form action="" method="POST">
                                     <div class="d-flex">
-                                        <h5 class="card-title float-left">Danh sách Lịch học - Khoa Công nghệ thông
+                                        <h5 class="card-title float-left">Danh sách phân công giảng dạy - Khoa Công nghệ thông
                                             tin</h5>
-                                        <button class="btn btn-lg btn-success ml-auto mb-1 text-bold">Lưu lịch học</button>
+                                            <a href="#" class="d-inline float-right ml-auto mb-1" onclick="requireValidate(event)">
+                                                <button class="btn btn-lg btn-success mb-1 text-bold">Lưu lịch học</button></a>
                                     </div>
                                         @csrf
                                         <input type="hidden" value="{{$id_lichHoc}}" name="id_lichHoc">
@@ -59,14 +60,14 @@
                                             <tbody>
                                                 @foreach ($listPhanCong as $phanCong)
                                                 <tr>
-                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong['tenMonHoc']}}"></td>
-                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong['ho']." ".$phanCong['ten']}}"></td>
-                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong['tenPhongHoc']}}"></td>
-                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong['ngayDay']}}"></td>
-                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{collect($phanCong['tietHocs'])->implode(',')}}"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong->tenMonHoc}}"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong->ho." ".$phanCong->ten}}"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong->tenPhongHoc}}"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{$phanCong->ngayDay}}"></td>
+                                                    <td><input onclick="noDelete()" type="text" class="form-control" readonly value="{{collect($phanCong->tietHocs)->implode(',')}}"></td>
                                                     <td>
                                                         <a href="#"
-                                                        onclick="deletePhanCong(`{{route('user.lichHoc.sort_delete',[$phanCong['id_lichHoc'], $phanCong['id_monHoc'],$phanCong['id_user_giang_vien'],$phanCong['id_ngayDay'],implode('-',$phanCong['id_tietHocs']),$phanCong['id_phongHoc']])}}`)"
+                                                        onclick="deletePhanCong(`{{route('user.phanCong.sort_delete',[$phanCong->id])}}`)"
                                                         >
                                                         <button type="button" class="btn btn-danger">Xoá</button>
                                                         </a>
