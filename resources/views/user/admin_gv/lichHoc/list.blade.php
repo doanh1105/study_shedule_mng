@@ -52,19 +52,22 @@
                                                     <td><span class="badge badge-pill badge-success">Đang áp dụng</span></td>
                                                     @endif
                                                     <td>
-                                                        <a href="{{route('user.lichHoc.view',[$lichHoc->id, $lichHoc->id_nganhHoc, $lichHoc->id_khoaHoc])}}" target="_blank">
+                                                    <div class="d-flex">
+                                                    <a href="{{route('user.lichHoc.view',[$lichHoc->id, $lichHoc->id_nganhHoc, $lichHoc->id_khoaHoc])}}" target="_blank">
                                                             <button class="btn btn-primary mr-1 mb-1"
                                                                 >Xem</button>
                                                         </a>
                                                         <a href="{{route('user.lichHoc.sort_view',['id_lichHoc' => $lichHoc->id,'id_nganhHoc' => $lichHoc->id_nganhHoc, 'id_khoaHoc' => $lichHoc->id_khoaHoc])}}" target="_blank">
                                                             <button class="btn {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'btn-secondary' : 'btn-success'}}  mr-1 mb-1" {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'disabled' : ''}}
-                                                                >Xếp lịch học</button>
+                                                                >Xếp</button>
                                                         </a>
                                                         <button class="btn {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'btn-secondary' : 'btn-warning'}}  mr-1 mb-1" {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'disabled' : ''}} data-toggle="modal"
-                                                            data-target="#sua-lich-hoc-{{ $lichHoc->id }}">Sửa thông tin</button>
+                                                            data-target="#sua-lich-hoc-{{ $lichHoc->id }}">Sửa</button>
                                                         <a href="#"
                                                             onclick="deleteLichHoc(`{{ route('user.lichHoc.delete', ['id' => $lichHoc->id]) }}`)"><button {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'disabled' : ''}}
                                                                 class="btn {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'btn-secondary' : 'btn-danger'}}  mb-1">Xoá</button></a>
+
+                                                    </div>
                                                     </td>
                                                 </tr>
                                             @endforeach
