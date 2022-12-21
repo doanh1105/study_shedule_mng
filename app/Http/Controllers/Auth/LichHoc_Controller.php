@@ -42,6 +42,19 @@ class LichHoc_Controller extends Controller
             $id_nganhHoc = $request->id_nganhHoc;
             $start_time = $request->start_time;
             $end_time = $request->end_time;
+
+            //check lịch học của khoá và ngành học đã tồn tại
+            $lich_hoc_avalable = DB::table('lich_hocs')
+                ->where('id_khoaHoc',$id_khoaHoc)
+                ->where('id_nganhHoc', $id_nganhHoc)
+                ->whereDate('ngayKetThuc','>=', now())
+                ->get();
+            if($lich_hoc_avalable->count()){
+                return back()->with('error','Không thể xếp lịch học cho khoá và ngành học này bởi lịch học hiện tại chưa kết thúc.');
+                return;
+            }
+            //
+
             LichHoc::create([
                 'tenLichHoc' => $tenLichHoc,
                 'id_khoaHoc' => $id_khoaHoc,
@@ -142,6 +155,65 @@ class LichHoc_Controller extends Controller
             $id_phongHoc = $request->id_phongHoc;
             $id_ngayDay = $request->id_ngayDay;
             $id_tietHocs = $request->id_tietHoc;
+
+            //check trùng lịch
+            $phanCong_avalable = DB::table('lich_hocs')
+                ->select('phan_congs.*','khoa_hocs.tenKhoa as tenKhoaHoc'
+                    ,'nganh_hoc.tenNganhHoc as tenNganhHoc','mon_hocs.tenMon as tenMonHoc')
+                ->leftJoin('khoa_hocs','lich_hocs.id_khoaHoc','khoa_hocs.id')
+                ->leftJoin('nganh_hoc','lich_hocs.id_nganhHoc','nganh_hoc.id')
+                ->leftJoin('phan_congs','phan_congs.id_LichHoc','lich_hocs.id')
+                ->leftJoin('mon_hocs','phan_congs.id_monHoc','mon_hocs.id')
+                ->whereDate('ngayKetThuc','>=', now())
+                ->where('phan_congs.id_phongHoc',$id_phongHoc)
+                ->orWhere('phan_congs.id_user_giang_vien',$id_giangVien)
+                ->where('phan_congs.id_ngayDay',$id_ngayDay)
+                ->get();
+//            dd($phanCong_avalable);
+            foreach ($phanCong_avalable as $phanCong){
+                $tietHoc_ids_arr = unserialize($phanCong->ids_tietHoc);
+                $tiet_hoc_compare = array_intersect($tietHoc_ids_arr,$id_tietHocs);
+
+                $tietHocs = DB::table('tiet_hoc')
+                    ->whereIn('id',$tiet_hoc_compare)->get();
+                $phanCong_tietHocs = [];
+                foreach ($tietHocs as $tietHoc){
+                    $phanCong_tietHocs[] =  $tietHoc->tenTietHoc;
+                }
+                $phanCong->tietHocs = $phanCong_tietHocs;
+                Log::debug(implode(",",$phanCong->tietHocs));
+                Log::debug($id_ngayDay." ".$phanCong->id_ngayDay);
+                Log::debug($id_phongHoc." ".$phanCong->id_phongHoc);
+                Log::debug(count($tiet_hoc_compare));
+                if(
+                    $id_ngayDay == $phanCong->id_ngayDay
+                    && $id_phongHoc == $phanCong->id_phongHoc
+                    && count($tiet_hoc_compare) > 0
+                ){
+                    return back()->with('error',
+                        "Trùng phòng học với môn <span class='text-danger'>$phanCong->tenMonHoc</span> <br>".
+                        "Khoá: <span class='text-danger'>$phanCong->tenKhoaHoc</span> <br>".
+                        "Ngành học: <span class='text-danger'>$phanCong->tenNganhHoc</span>  <br>".
+                        "Trùng "."<span class='text-danger'>".implode(",",$phanCong->tietHocs)."</span> "
+                    );
+                    return;
+                }
+                elseif (
+                    $id_ngayDay == $phanCong->id_ngayDay
+                    && $id_giangVien == $phanCong->id_user_giang_vien
+                    && count($tiet_hoc_compare) > 0
+                ){
+                    return back()->with('error',
+                        "Trùng giảng viên với môn <span class='text-danger'>$phanCong->tenMonHoc</span> <br>".
+                        "Khoá: <span class='text-danger'>$phanCong->tenKhoaHoc</span> <br>".
+                        "Ngành học: <span class='text-danger'>$phanCong->tenNganhHoc</span>  <br>".
+                        "Trùng "."<span class='text-danger'>".implode(",",$phanCong->tietHocs)."</span> "
+                    );
+                    return;
+                }
+            }
+
+            //
 
             DB::table('phan_congs')->insert([
                 'id_lichHoc' => $id_lichHoc,

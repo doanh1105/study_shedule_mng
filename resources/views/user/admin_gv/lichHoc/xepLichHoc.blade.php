@@ -157,7 +157,7 @@
             Swal.fire({
                 position: 'center',
                 icon: 'error',
-                title: "{{ Session::get('error') }}",
+                title: "{!! Session::get('error') !!}",
                 showConfirmButton: true,
             })
         </script>
