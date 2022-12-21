@@ -48,10 +48,10 @@ class LichHoc_Controller extends Controller
             $lich_hoc_avalable = DB::table('lich_hocs')
                 ->where('id_khoaHoc',$id_khoaHoc)
                 ->where('id_nganhHoc', $id_nganhHoc)
-                ->whereDate('ngayKetThuc','>=', now())
+                ->whereDate('ngayKetThuc','>=', $start_time)
                 ->get();
             if($lich_hoc_avalable->count()){
-                return back()->with('error','Không thể xếp lịch học cho khoá và ngành học này bởi lịch học hiện tại chưa kết thúc.');
+                return back()->with('error','Đã có lịch học khác được áp dụng.');
                 return;
             }
             //

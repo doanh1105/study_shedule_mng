@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Controller_GiaoVu;
 use App\Http\Controllers\Auth\Controller_KhoaHoc;
 use App\Http\Controllers\Auth\Controller_MonHoc;
 use App\Http\Controllers\Auth\HomeController;
@@ -30,16 +31,22 @@ Route::middleware('auth.user')->name('user.')->group(function (){
     Route::get('/',[HomeController::class,'index'])->name('home');
 
     // only admin
-    Route::middleware('role.admin')->group(function(){  // Khoá học
-        Route::get('/khoa-hoc',[Controller_KhoaHoc::class,'index'])->name('khoaHoc.list');
-        Route::post('/khoa-hoc',[Controller_KhoaHoc::class,'store'])->name('khoaHoc.store');
-        Route::post('/khoa-hoc/{id}/update',[Controller_KhoaHoc::class,'update'])->name('khoaHoc.update');
-        Route::get('/khoa-hoc/{id}/delete',[Controller_KhoaHoc::class,'destroy'])->name('khoaHoc.destroy');
+    Route::middleware('role.admin')->group(function(){
+        // Giáo vụ
+        Route::get('/giao-vu',[Controller_GiaoVu::class,'index'])->name('giaoVu.list');
+        Route::post('/giao-vu',[Controller_GiaoVu::class,'store'])->name('giaoVu.store');
+        Route::post('/giao-vu/{id}/update',[Controller_GiaoVu::class,'update'])->name('giaoVu.update');
+        Route::get('/giao-vu/{id}/delete',[Controller_GiaoVu::class,'destroy'])->name('giaoVu.destroy');
     });
     //
 
     //admin + giao_vu
     Route::middleware('role.giao_vu')->group(function(){
+        // Khoá học
+        Route::get('/khoa-hoc',[Controller_KhoaHoc::class,'index'])->name('khoaHoc.list');
+        Route::post('/khoa-hoc',[Controller_KhoaHoc::class,'store'])->name('khoaHoc.store');
+        Route::post('/khoa-hoc/{id}/update',[Controller_KhoaHoc::class,'update'])->name('khoaHoc.update');
+        Route::get('/khoa-hoc/{id}/delete',[Controller_KhoaHoc::class,'destroy'])->name('khoaHoc.destroy');
         // Giảng viên
         Route::get('/giang-vien',[UserController::class,'teacher_list'])->name('giangVien.list');
         Route::post('/giang-vien',[UserController::class,'teacher_store'])->name('giangVien.store');
