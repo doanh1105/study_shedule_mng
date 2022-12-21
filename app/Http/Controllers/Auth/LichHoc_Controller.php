@@ -323,18 +323,60 @@ class LichHoc_Controller extends Controller
 
     public function lichHoc_view_action(){
         //
-        // $user = Auth::user();
-        $listLichHoc = LichHoc::select('lich_hocs.*','khoa_hocs.tenKhoa as tenKhoa','nganh_hoc.tenNganhHoc as tenNganhHoc','nganh_hoc.maNganhHoc as maNganhHoc')
-                ->leftJoin('khoa_hocs', 'lich_hocs.id_khoaHoc','khoa_hocs.id')
-                ->leftJoin('nganh_hoc', 'lich_hocs.id_nganhHoc','nganh_hoc.id')
-                ->orderBy('lich_hocs.id', 'desc')
-                ->paginate(AppUtils::ITEM_PER_PAGE);
-        $listNganhHoc = DB::table('nganh_hoc')->get();
-        $listKhoaHoc = DB::table('khoa_hocs')->get();
-        return view('user.admin_gv.sinhVien.lichHoc_list',[
-            'listLichHoc' => $listLichHoc,
-            'listNganhHoc' => $listNganhHoc,
-            'listKhoaHoc' => $listKhoaHoc
-        ]);
+        $user = Auth::user();
+        try{
+            if($user->role == AppUtils::ROLE_SINH_VIEN){
+                $listLichHoc = LichHoc::select('lich_hocs.*','khoa_hocs.tenKhoa as tenKhoa','nganh_hoc.tenNganhHoc as tenNganhHoc','nganh_hoc.maNganhHoc as maNganhHoc')
+                        ->leftJoin('khoa_hocs', 'lich_hocs.id_khoaHoc','khoa_hocs.id')
+                        ->leftJoin('nganh_hoc', 'lich_hocs.id_nganhHoc','nganh_hoc.id')
+                        ->where('lich_hocs.id_nganhHoc', $user->id_nganhHoc)
+                        ->where('lich_hocs.id_khoaHoc', $user->id_KhoaHoc)
+                        ->orderBy('lich_hocs.id', 'desc')
+                        ->paginate(AppUtils::ITEM_PER_PAGE);
+                $nganhHoc = DB::table('nganh_hoc')->where('id', $user->id_nganhHoc)->first();
+                $khoaHoc = DB::table('khoa_hocs')->where('id', $user->id_KhoaHoc)->first();
+                return view('user.admin_gv.sinhVien.lichHoc_list',[
+                    'listLichHoc' => $listLichHoc,
+                    'nganhHoc' => $nganhHoc,
+                    'khoaHoc' => $khoaHoc
+                ]);
+                }
+                elseif($user->role == AppUtils::ROLE_GIANG_VIEN){
+                    $listPhanCong = PhanCong::select('phan_congs.*','mon_hocs.tenMon as tenMonHoc',
+                                        'users.ho as ho',
+                                        'users.ten as ten',
+                                        'table_ngay_days.name as ngayDay',
+                                        'phong_hocs.tenPhonghoc as tenPhongHoc'
+                                        )
+                                    ->leftJoin('lich_hocs','phan_congs.id_lichHoc', 'lich_hocs.id')
+                                    ->leftJoin('mon_hocs','phan_congs.id_monHoc','mon_hocs.id')
+                                    ->leftJoin('users', 'phan_congs.id_user_giang_vien','users.id')
+                                    ->leftJoin('table_ngay_days','phan_congs.id_ngayDay','table_ngay_days.id')
+                                    ->leftJoin('phong_hocs','phan_congs.id_phongHoc','phong_hocs.id')
+                                    ->where('phan_congs.id_user_giang_vien',$user->id)
+                                    ->whereDate('lich_hocs.ngayKetThuc', '>=' ,now())
+                                    ->get();
+
+                     foreach($listPhanCong as $phanCong){
+                         $ids_tietHoc = unserialize($phanCong->ids_tietHoc);
+                         $tietHocs = DB::table('tiet_hoc')
+                             ->whereIn('id',$ids_tietHoc)->get();
+                         $phanCong_tietHocs = [];
+                         foreach ($tietHocs as $tietHoc){
+                            $phanCong_tietHocs[] =  $tietHoc->tenTietHoc;
+                         }
+                         $phanCong->tietHocs = $phanCong_tietHocs;
+                     }
+                    //  dd($listPhanCong);
+                    return view('user.admin_gv.giangVien.lichDay_list',[
+                        'userDay' =>$user,
+                        'listPhanCong' => $listPhanCong,
+                    ]);
+                }
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage(). $e->getTraceAsString());
+            abort(500);
+        }
     }
 }
