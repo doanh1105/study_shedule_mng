@@ -10,6 +10,7 @@ use App\Models\PhanCong;
 use App\Models\PhongHoc;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -274,11 +275,12 @@ class LichHoc_Controller extends Controller
         }
     }
 
-    public function lichHoc_view($id_lichHoc, $id_khoaHoc, $id_nganhHoc){
+    public function lichHoc_view($id_lichHoc,$id_nganhHoc, $id_khoaHoc){
         try{
             $lichHoc = DB::table('lich_hocs')->where('id', $id_lichHoc)->first();
             $khoaHoc = DB::table('khoa_hocs')->where('id',$id_khoaHoc)->first();
             $nganhHoc = DB::table('nganh_hoc')->where('id',$id_nganhHoc)->first();
+            // dd($id_nganhHoc);
             if(!$lichHoc || !$khoaHoc || !$nganhHoc){
                 return view('errors.404');
             }
@@ -317,5 +319,22 @@ class LichHoc_Controller extends Controller
             Log::error($e->getMessage(). $e->getTraceAsString());
             abort(500);
         }
+    }
+
+    public function lichHoc_view_action(){
+        //
+        // $user = Auth::user();
+        $listLichHoc = LichHoc::select('lich_hocs.*','khoa_hocs.tenKhoa as tenKhoa','nganh_hoc.tenNganhHoc as tenNganhHoc','nganh_hoc.maNganhHoc as maNganhHoc')
+                ->leftJoin('khoa_hocs', 'lich_hocs.id_khoaHoc','khoa_hocs.id')
+                ->leftJoin('nganh_hoc', 'lich_hocs.id_nganhHoc','nganh_hoc.id')
+                ->orderBy('lich_hocs.id', 'desc')
+                ->paginate(AppUtils::ITEM_PER_PAGE);
+        $listNganhHoc = DB::table('nganh_hoc')->get();
+        $listKhoaHoc = DB::table('khoa_hocs')->get();
+        return view('user.admin_gv.sinhVien.lichHoc_list',[
+            'listLichHoc' => $listLichHoc,
+            'listNganhHoc' => $listNganhHoc,
+            'listKhoaHoc' => $listKhoaHoc
+        ]);
     }
 }

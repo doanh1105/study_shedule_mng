@@ -77,12 +77,14 @@ $user = \Illuminate\Support\Facades\Auth::user();
                     </li>
             @endif
 
+            @if ($user->role == \App\Http\Utils\AppUtils::ROLE_SINH_VIEN OR $user->role == \App\Http\Utils\AppUtils::ROLE_GIANG_VIEN)
             <li class="nav-item w-100">
-                <a class="nav-link h5" href="{{ route('user.home') }}">
-                    <i class="fe fe-home fe-16"></i>
+                <a class="nav-link h5" href="{{ route('user.lichHoc.view_action') }}">
+                    <i class="fe fe-eye fe-16"></i>
                     <span class="ml-3 item-text">Xem lịch học</span>
                 </a>
             </li>
+            @endif
         </ul>
     </nav>
   </aside>

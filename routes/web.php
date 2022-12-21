@@ -75,10 +75,12 @@ Route::middleware('auth.user')->name('user.')->group(function (){
             Route::get('/lich-hoc/{id_lichHoc}/{id_nganhHoc}/sort/{id_khoaHoc}',[LichHoc_Controller::class,'lichHoc_sort_view'])->name('lichHoc.sort_view');
             Route::post('/lich-hoc/{id_lichHoc}/{id_nganhHoc}/sort/{id_khoaHoc}',[LichHoc_Controller::class,'lichHoc_sort_store'])->name('lichHoc.sort_store');
             Route::get('/lich-hoc/del_sort/{id}',[LichHoc_Controller::class,'phanCong_sort_delete'])->name('phanCong.sort_delete');
+            Route::get('/lich-hoc/{id_lichHoc}/{id_nganhHoc}/{id_khoaHoc}/view_action',[LichHoc_Controller::class,'lichHoc_view'])->name('lichHoc.view');
         });
     });
 
     // Xem lịch học
-    Route::get('/lich-hoc/{id_lichHoc}/{id_nganhHoc}/{id_khoaHoc}/view_action',[LichHoc_Controller::class,'lichHoc_view'])->name('lichHoc.view');
+    Route::get('/lich-hoc/view_action',[LichHoc_Controller::class,'lichHoc_view_action'])->name('lichHoc.view_action');
+    Route::get('/lich-hoc/{id_lichHoc}/{id_nganhHoc}/{id_khoaHoc}/teacher_view_action',[LichHoc_Controller::class,'lichHoc_teacher_view'])->name('lichHoc.teacher_view');
 
 });
