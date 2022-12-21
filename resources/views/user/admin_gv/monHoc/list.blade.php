@@ -2,7 +2,7 @@
 
 {{-- title --}}
 @section('title')
-    <title>Quản lí Sinh viên - Hệ thống Quản lí lịch học - Khoa Công nghệ thông tin</title>
+    <title>Quản lí Môn học - Hệ thống Quản lí lịch học - Khoa Công nghệ thông tin</title>
 @endsection
 
 {{-- add css --}}
