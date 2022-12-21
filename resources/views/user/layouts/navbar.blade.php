@@ -23,25 +23,33 @@ $user = \Illuminate\Support\Facades\Auth::user();
 
             @if($user->role != \App\Http\Utils\AppUtils::ROLE_SINH_VIEN AND $user->role != \App\Http\Utils\AppUtils::ROLE_GIANG_VIEN)
                     <li class="nav-item dropdown {{request()->routeIs('user.khoaHoc*') || request()->routeIs('user.giangVien*')
+                        || request()->routeIs('user.sinhVien*') || request()->routeIs('user.phongHoc*') || request()->routeIs('user.giaoVu*')
+                        || request()->routeIs('user.monHoc*')
                      ? 'active' : ''}}">
                         <a href="#setting" data-toggle="collapse" aria-expanded="{{request()->routeIs('user.khoaHoc*') || request()->routeIs('user.giangVien*')
-                        || request()->routeIs('user.sinhVien*') || request()->routeIs('user.phongHoc*')
+                        || request()->routeIs('user.sinhVien*') || request()->routeIs('user.phongHoc*') || request()->routeIs('user.giaoVu*')
                         || request()->routeIs('user.monHoc*') ? 'true' : 'false'}}" class="dropdown-toogle nav-link h5">
                             <i class="fe fe-tool fe-16"></i>
                             <span class="ml-3 item-text">Cấu hình</span>
                         </a>
                         <ul class="collapse list-unstyled pl-4 w-100 collapse
                         {{request()->routeIs('user.khoaHoc*') || request()->routeIs('user.giangVien*')
-                        || request()->routeIs('user.sinhVien*') || request()->routeIs('user.phongHoc*')
+                        || request()->routeIs('user.sinhVien*') || request()->routeIs('user.phongHoc*') || request()->routeIs('user.giaoVu*')
                         || request()->routeIs('user.monHoc*') ? 'show' : ''}}" id="setting">
                             @if($user->role == \App\Http\Utils\AppUtils::ROLE_ADMIN)
-                                <li class="nav-item w-100">
-                                    <a class="nav-link h6 {{request()->routeIs('user.khoaHoc*') ? 'text-danger' : ''}}" href="{{ route('user.khoaHoc.list') }}">
-                                        <i class="fe fe-layers fe-16"></i>
-                                        <span class="ml-3 item-text">Khoá đào tạo</span>
-                                    </a>
-                                </li>
+                            <li class="nav-item w-100">
+                                <a class="nav-link h6 {{request()->routeIs('user.giaoVu*') ? 'text-danger' : ''}}" href="{{ route('user.giaoVu.list') }}">
+                                    <i class="fe fe-settings fe-16"></i>
+                                    <span class="ml-3 item-text">Tài khoản giáo vụ</span>
+                                </a>
+                            </li>
                             @endif
+                            <li class="nav-item w-100">
+                                <a class="nav-link h6 {{request()->routeIs('user.khoaHoc*') ? 'text-danger' : ''}}" href="{{ route('user.khoaHoc.list') }}">
+                                    <i class="fe fe-layers fe-16"></i>
+                                    <span class="ml-3 item-text">Khoá đào tạo</span>
+                                </a>
+                            </li>
                             <li class="nav-item w-100">
                                 <a class="nav-link h6 {{request()->routeIs('user.giangVien*') ? 'text-danger' : ''}}" href="{{ route('user.giangVien.list') }}">
                                     <i class="fe fe-user fe-16"></i>
