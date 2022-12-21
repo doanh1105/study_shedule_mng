@@ -63,7 +63,7 @@
                                                         <button class="btn {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'btn-secondary' : 'btn-warning'}}  mr-1 mb-1" {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'disabled' : ''}} data-toggle="modal"
                                                             data-target="#sua-lich-hoc-{{ $lichHoc->id }}">Sửa thông tin</button>
                                                         <a href="#"
-                                                            onclick="deleteLichHoc(`{{ route('user.khoaHoc.destroy', ['id' => $lichHoc->id]) }}`)"><button {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'disabled' : ''}}
+                                                            onclick="deleteLichHoc(`{{ route('user.lichHoc.delete', ['id' => $lichHoc->id]) }}`)"><button {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'disabled' : ''}}
                                                                 class="btn {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'btn-secondary' : 'btn-danger'}}  mb-1">Xoá</button></a>
                                                     </td>
                                                 </tr>

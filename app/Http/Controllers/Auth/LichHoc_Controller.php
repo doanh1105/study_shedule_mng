@@ -91,6 +91,25 @@ class LichHoc_Controller extends Controller
         }
     }
 
+    public function lichHoc_delete($id){
+        try{
+            $lichHoc = LichHoc::find($id);
+            if(!$lichHoc){
+                return back()->with('error',__('messages.not_match',['attribute' => 'Lịch học']));
+            } else {
+                DB::transaction(function() use($lichHoc){
+                    DB::table('phan_congs')->where('id_lichHoc',$lichHoc->id)->delete();
+                    $lichHoc->delete();
+                });
+                return back()->with('success',__('messages.success.delete'));
+            }
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage(). $e->getTraceAsString());
+            return back()->with('error',__('messages.fails.delete'));
+        }
+    }
+
     public function lichHoc_sort_view($id_lichHoc, $id_nganhHoc, $id_khoaHoc){
         try{
             $lichHoc = DB::table('lich_hocs')->where('id', $id_lichHoc)->first();
