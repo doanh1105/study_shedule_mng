@@ -27,13 +27,11 @@
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <div>
-                                            <h3 class="card-title float-left">{{$lichHoc->tenLichHoc}}</h3>
+                                            <h3 class="card-title">{{$lichHoc->tenLichHoc}}</h3>
                                                 <p class="h5"></p>
                                                 <p class="h5">Khoá: {{$khoaHoc->tenKhoa}}</p>
                                                 <p class="h5">Ngành đào tạo: {{$nganhHoc->tenNganhHoc}}</p>
                                                 <p class="h5">Thời gian: {{\Illuminate\Support\Carbon::parse($lichHoc->ngayBatDau)->format('d-m-Y')}} đến {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->format('d-m-Y')}}</p>
-
-
                                         </div>
                                     </div>
                                         <table class="table table-bordered ">
