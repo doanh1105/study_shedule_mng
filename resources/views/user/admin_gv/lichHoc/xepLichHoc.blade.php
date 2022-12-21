@@ -38,9 +38,17 @@
                             <div class="card shadow">
                                 <div class="card-body">
                                     <form action="" method="POST">
+                                        @csrf
                                     <div class="d-flex">
-                                        <h5 class="card-title float-left">Danh sách phân công giảng dạy - Khoa Công nghệ thông
-                                            tin</h5>
+                                            <div>
+                                                <h3 class="card-title float-left">Danh sách phân công giảng dạy - Khoa Công nghệ thông
+                                                    tin</h3>
+                                                    <p class="h5">{{$lichHoc->tenLichHoc}}</p>
+                                                    <p class="h5">Khoá: {{$khoaHoc->tenKhoa}}</p>
+                                                    <p class="h5">Ngành đào tạo: {{$nganhHoc->tenNganhHoc}}</p>
+                                                    <p class="h5">Thời gian: {{\Illuminate\Support\Carbon::parse($lichHoc->ngayBatDau)->format('d-m-Y')}} đến {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->format('d-m-Y')}}</p>
+
+                                            </div>
                                             <a href="#" class="d-inline float-right ml-auto mb-1" onclick="requireValidate(event)">
                                                 <button class="btn btn-lg btn-success mb-1 text-bold">Lưu lịch học</button></a>
                                     </div>

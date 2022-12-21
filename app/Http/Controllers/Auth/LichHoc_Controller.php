@@ -94,8 +94,11 @@ class LichHoc_Controller extends Controller
     public function lichHoc_sort_view($id_lichHoc, $id_nganhHoc, $id_khoaHoc){
         try{
             $lichHoc = DB::table('lich_hocs')->where('id', $id_lichHoc)->first();
-            if(!$lichHoc){
-                abort(404);
+            $khoaHoc = DB::table('khoa_hocs')->where('id',$id_khoaHoc)->first();
+            $nganhHoc = DB::table('nganh_hoc')->where('id',$id_nganhHoc)->first();
+            // dd($nganhHoc);
+            if(!$lichHoc || !$khoaHoc || !$nganhHoc){
+                return view('errors.404');
             }
             $listPhanCong = PhanCong::select('phan_congs.*','mon_hocs.tenMon as tenMonHoc',
                                 'users.ho as ho',
@@ -138,7 +141,10 @@ class LichHoc_Controller extends Controller
                 'listPhongHoc' => $listPhongHoc,
                 'listNgayHoc' => $listNgayHoc,
                 'listTietHoc' => $listTietHoc,
-                'id_lichHoc' => $id_lichHoc
+                'id_lichHoc' => $id_lichHoc,
+                'lichHoc' => $lichHoc,
+                'nganhHoc' => $nganhHoc,
+                'khoaHoc' => $khoaHoc,
             ]);
         }
         catch(\Exception $e){
@@ -246,6 +252,51 @@ class LichHoc_Controller extends Controller
         catch(\Exception $e){
             Log::error($e->getMessage(). $e->getTraceAsString());
             return back()->with('error',__('messages.fails.delete'));
+        }
+    }
+
+    public function lichHoc_view($id_lichHoc, $id_khoaHoc, $id_nganhHoc){
+        try{
+            $lichHoc = DB::table('lich_hocs')->where('id', $id_lichHoc)->first();
+            $khoaHoc = DB::table('khoa_hocs')->where('id',$id_khoaHoc)->first();
+            $nganhHoc = DB::table('nganh_hoc')->where('id',$id_nganhHoc)->first();
+            if(!$lichHoc || !$khoaHoc || !$nganhHoc){
+                return view('errors.404');
+            }
+            $listPhanCong = PhanCong::select('phan_congs.*','mon_hocs.tenMon as tenMonHoc',
+                'users.ho as ho',
+                'users.ten as ten',
+                'table_ngay_days.name as ngayDay',
+                'phong_hocs.tenPhonghoc as tenPhongHoc'
+            )
+                ->leftJoin('lich_hocs','phan_congs.id_lichHoc', 'lich_hocs.id')
+                ->leftJoin('mon_hocs','phan_congs.id_monHoc','mon_hocs.id')
+                ->leftJoin('users', 'phan_congs.id_user_giang_vien','users.id')
+                ->leftJoin('table_ngay_days','phan_congs.id_ngayDay','table_ngay_days.id')
+                ->leftJoin('phong_hocs','phan_congs.id_phongHoc','phong_hocs.id')
+                ->where('lich_hocs.id',$id_lichHoc)
+                ->get();
+
+            foreach($listPhanCong as $phanCong){
+                $ids_tietHoc = unserialize($phanCong->ids_tietHoc);
+                $tietHocs = DB::table('tiet_hoc')
+                    ->whereIn('id',$ids_tietHoc)->get();
+                $phanCong_tietHocs = [];
+                foreach ($tietHocs as $tietHoc){
+                    $phanCong_tietHocs[] =  $tietHoc->tenTietHoc;
+                }
+                $phanCong->tietHocs = $phanCong_tietHocs;
+            }
+            return view('user.admin_gv.lichHoc.lichHoc_view',[
+                'listPhanCong' => $listPhanCong,
+                'lichHoc' => $lichHoc,
+                'khoaHoc' => $khoaHoc,
+                'nganhHoc' => $nganhHoc
+            ]);
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage(). $e->getTraceAsString());
+            abort(500);
         }
     }
 }

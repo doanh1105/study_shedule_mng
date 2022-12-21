@@ -52,11 +52,11 @@
                                                     <td><span class="badge badge-pill badge-success">Đang áp dụng</span></td>
                                                     @endif
                                                     <td>
-                                                        <a href="#">
+                                                        <a href="{{route('user.lichHoc.view',[$lichHoc->id, $lichHoc->id_nganhHoc, $lichHoc->id_khoaHoc])}}" target="_blank">
                                                             <button class="btn btn-primary mr-1 mb-1"
                                                                 >Xem</button>
                                                         </a>
-                                                        <a href="{{route('user.lichHoc.sort_view',['id_lichHoc' => $lichHoc->id,'id_nganhHoc' => $lichHoc->id_nganhHoc, 'id_khoaHoc' => $lichHoc->id_khoaHoc,'maNganhHoc' => $lichHoc->maNganhHoc])}}" target="_blank">
+                                                        <a href="{{route('user.lichHoc.sort_view',['id_lichHoc' => $lichHoc->id,'id_nganhHoc' => $lichHoc->id_nganhHoc, 'id_khoaHoc' => $lichHoc->id_khoaHoc])}}" target="_blank">
                                                             <button class="btn {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'btn-secondary' : 'btn-success'}}  mr-1 mb-1" {{\Illuminate\Support\Carbon::parse($lichHoc->ngayKetThuc)->lt(now()) ? 'disabled' : ''}}
                                                                 >Xếp lịch học</button>
                                                         </a>
