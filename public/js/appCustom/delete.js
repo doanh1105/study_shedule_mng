@@ -92,3 +92,20 @@ function deletePhanCong(delete_domain){
         }
     })
 }
+
+function deleteLichHoc(delete_domain){
+    Swal.fire({
+        title: 'Xoá lịch học này?',
+        text:'Chú ý: Không thể hoàn tác hành động này!',
+        showDenyButton: true,
+        showCancelButton: true,
+        showConfirmButton: false,
+        cancelButtonText: 'Huỷ',
+        denyButtonText: `Xoá`,
+    })
+        .then((result) => {
+            if (result.isDenied) {
+                window.location.href = delete_domain;
+            }
+        })
+}
