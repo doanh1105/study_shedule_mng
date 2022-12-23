@@ -39,7 +39,7 @@
                                 <div class="card-body">
                                     <div class="d-flex">
                                             <div>
-                                                <h3 class="card-title float-left">Lịch giảng dạy</h3>
+                                                <h3 class="card-title">Lịch giảng dạy</h3>
                                                 <p class="h5">Giảng viên: <span class="text-info">{{$userDay->ho." ".$userDay->ten}}</span></p>
                                             </div>
                                     </div>

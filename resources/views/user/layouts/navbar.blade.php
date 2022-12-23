@@ -37,12 +37,12 @@ $user = \Illuminate\Support\Facades\Auth::user();
                         || request()->routeIs('user.sinhVien*') || request()->routeIs('user.phongHoc*') || request()->routeIs('user.giaoVu*')
                         || request()->routeIs('user.monHoc*') ? 'show' : ''}}" id="setting">
                             @if($user->role == \App\Http\Utils\AppUtils::ROLE_ADMIN)
-                            <li class="nav-item w-100">
+                            {{-- <li class="nav-item w-100">
                                 <a class="nav-link h6 {{request()->routeIs('user.giaoVu*') ? 'text-danger' : ''}}" href="{{ route('user.giaoVu.list') }}">
                                     <i class="fe fe-settings fe-16"></i>
                                     <span class="ml-3 item-text">Tài khoản giáo vụ</span>
                                 </a>
-                            </li>
+                            </li> --}}
                             @endif
                             <li class="nav-item w-100">
                                 <a class="nav-link h6 {{request()->routeIs('user.khoaHoc*') ? 'text-danger' : ''}}" href="{{ route('user.khoaHoc.list') }}">
